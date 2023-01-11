@@ -9,7 +9,7 @@ import time
 import tensorflow as tf
 from tensorflow.keras.utils import to_categorical
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
-# categorical 을 사용할시 컬럼 삭제.
+# categorical 을 사용할시 컬럼 삭제
 # https://chat.openai.com/chat
 
 #1. 데이터
