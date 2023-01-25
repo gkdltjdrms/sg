@@ -1,0 +1,76 @@
+server:192.168.0.171
+ip :192.168.0.34
+글꼴: d2coding
+putty.exe
+notepad++
+j5
+
+
+'   single quote   홑 따옴표
+"   double quote   겹 따옴표
+`   back quote, back tick      ~ tilde, 물결(wave), 출렁이
+' 그녀가 물었다. "이번 토요일 스케줄은?" 어떻게 되느냐고'
+ 
+  1월 2023
+일 월 화 수 목 금 토
+ 1  2  3  4  5  6  7
+ 8  9 10 11 12 13 14
+15 16 17 18 19 20 21
+22 23 24 25 26 27 28
+29 30 31
+
+date
+
+stdin   0
+stdout  1
+stderr  2
+
+> 출력 방향을 재지정하겠다.
+>> 추가로 붙이기
+cat < a2 
+r - read
+w - write
+x - execute
+
+브라우저 컴파일러
+onlinegdb.com
+
+error, 상황, 해결방법
+question, 
+hostname : a5
+2  1l3
+
+#root  // 관리자
+$        //  일반 사용자
+s 시작
+k 없애기
+
+Daemon
+http
+ftp
+smtp
+pop3
+imap
+mysql
+systemctl start mysql
+systemctl status mysql
+systemctl restart mysql    
+
+r  4
+w  2
+x  1
+
+/etc -- 설정 파일 모음
+/var -- 실제 데이터 저장
+so shared object
+DLL dynamic link library
+78p 새로 설치 용량
+wc word count
+
+notepad
+mspaint
+calc
+chrome
+
+
+
