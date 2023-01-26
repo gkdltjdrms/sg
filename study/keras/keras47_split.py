@@ -27,13 +27,14 @@ model = Sequential()
 model.add(LSTM(64, input_shape=(4, 1), activation='relu'))
 model.add(Dense(32, activation='relu'))
 model.add(Dense(32, activation='relu'))
+model.add(Dense(32, activation='relu'))
 model.add(Dense(16, activation='relu'))
 model.add(Dense(1))
 model.summary()
 
 # 컴파일 훈련
 model.compile(loss='mse', optimizer='adam')
-model.fit(x, y, epochs=250, batch_size=2)
+model.fit(x, y, epochs=500, batch_size=8, verbose=3)
 
 # 평가, 예측
 loss = model.evaluate(x, y)
