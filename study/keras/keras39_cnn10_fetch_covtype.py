@@ -108,7 +108,8 @@ path = './_save/'
 #2. 모델 구성
 # model = Sequential()
 model = Sequential()
-model.add(Conv2D(64, (2,1), input_shape=(54,1,1)))
+model.add(Conv2D(64, (2,1), input_shape=(54,1,1),
+                 padding='same'))
 model.add(Flatten())
 model.add(Dense(64, activation='relu'))
 model.add(Dropout(0.2))
@@ -138,7 +139,7 @@ model.compile(loss='categorical_crossentropy', optimizer='adam',
               metrics=['accuracy'])
 start = time.time()
 
-model.fit(x_train, y_train, epochs=10, batch_size=256,  
+model.fit(x_train, y_train, epochs=300, batch_size=256,  
           validation_split=0.2, callbacks=[es],
           verbose=3)
 end = time.time()

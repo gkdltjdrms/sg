@@ -34,10 +34,14 @@ x_test = x_test.reshape(3266, 8, 1, 1)
 test_csv = test_csv.reshape(6493,8,1,1)
 # # #2. 모델구성 
 model = Sequential()
-model.add(Conv2D(64, (2,1), input_shape=(8,1,1)))
+model.add(Conv2D(64, (2,1), input_shape=(8,1,1),
+                 activation='relu',
+                 strides=2))
 model.add(Flatten())
 model.add(Dense(64, activation='relu'))
-model.add(Dropout(0.2))
+model.add(Dropout(0.25))
+model.add(Dense(32, activation='relu'))
+model.add(Dropout(0.25))
 model.add(Dense(32, activation='relu'))
 model.add(Dense(32, activation='relu'))
 model.add(Dense(1))
@@ -70,9 +74,9 @@ earlystopping = EarlyStopping(monitor='val_loss',
                               restore_best_weights=True,
                               verbose=1)
  
-hist = model.fit(x_train, y_train, epochs=3, batch_size=32,
+hist = model.fit(x_train, y_train, epochs=5000, batch_size=128,
           validation_split=0.2, callbacks=[earlystopping],
-          verbose=3)
+          verbose=1)
 
 #4. 평가, 예측
 loss = model.evaluate(x_test, y_test)
