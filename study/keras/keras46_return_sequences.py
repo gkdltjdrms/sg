@@ -14,9 +14,11 @@ print(x.shape, y.shape) # (13, 3) (13, )
 x = x.reshape(13,3,1)
 
 # 모델구성
-model = Sequential()
-model.add(LSTM(units = 64, input_shape=(3, 1),
+model = Sequential()                       # ( N, 3, 1)
+model.add(LSTM(units = 64, input_shape=(3, 1), # ( N, 64)
+               return_sequences=True,  
                activation='relu'))
+model.add(LSTM(32))
 model.add(Dense(32, activation='relu'))
 model.add(Dense(32, activation='relu'))
 model.add(Dense(16, activation='relu')) 
