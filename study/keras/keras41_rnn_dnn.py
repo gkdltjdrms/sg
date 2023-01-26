@@ -16,13 +16,16 @@ x = np.array([[1,2,3],
 
 y = np.array([4,5,6,7,8,9,10])
 
-print(x.shape, y.shape) # (7, 3), (7, ) 
+# print(x.shape, y.shape) # (7, 3), (7, ) 
 
-x = x.reshape(7, 3, 1)
+# x = x.reshape(7, 3, 1)
 print(x.shape)    #(7, 3, 1)
 # 모델구성
 model = Sequential()
-model.add(SimpleRNN(32, input_shape=(3, 1)))
+# model.add(SimpleRNN(64, input_shape=(3, 1)))
+model.add(Dense(64, input_shape=(3,), activation='relu'))
+model.add(Dense(32, activation='relu'))
+model.add(Dense(32, activation='relu'))
 model.add(Dense(16, activation='relu'))
 model.add(Dense(8, activation='relu'))
 model.add(Dense(4, activation='relu'))
@@ -30,7 +33,7 @@ model.add(Dense(1))
 
 #컴파일 훈련
 model.compile(loss='mse', optimizer='adam')
-model.fit(x, y, epochs=1000, batch_size=7)
+model.fit(x, y, epochs=500, batch_size=7)
 
 #4 평가 예측
 loss = model.evaluate(x, y)
