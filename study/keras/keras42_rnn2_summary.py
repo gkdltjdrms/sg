@@ -22,12 +22,13 @@ x = x.reshape(7, 3, 1)
 print(x.shape)    #(7, 3, 1)
 # 모델구성
 model = Sequential()
-model.add(SimpleRNN(64, input_shape=(3, 1)))
+model.add(SimpleRNN(units = 64, input_shape=(3, 1)))
+                 # (n, 3, 1) -> ([batch, timesteps, feature]) 시계열 데이터에는 y 가 없다
 model.add(Dense(16, activation='relu'))
 model.add(Dense(8, activation='relu'))
 model.add(Dense(4, activation='relu'))
 model.add(Dense(1))
 
 model.summary() # 64*64+(64*1(input_shape))+64
-
+                # units * ( feature + bios + units ) = params
 
