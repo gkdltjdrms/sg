@@ -36,3 +36,8 @@ print('loss :', loss)
 y_pred = x_predict.reshape(1, 3, 1)
 result =model.predict(y_pred)
 print('[50, 60, 70]의 결과 :', result)
+
+#      데이터 차원      Input_shape       아웃풋데이터 차원
+# DNN    2차원이상        (10, )              2차원 이상
+# RNN      3               2                    2
+# CNN      4               3                   4차원
