@@ -1,6 +1,6 @@
 import numpy as np                       
 from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense, SimpleRNN,GRU, Dropout, LSTM
+from tensorflow.keras.layers import Dense, SimpleRNN, Dropout, LSTM
 #1. 데이터
 x = np.array([[1,2,3],[2,3,4],[3,4,5],
              [4,5,6],[5,6,7],[6,7,8],
@@ -15,22 +15,22 @@ x = x.reshape(13,3,1)
 
 # 모델구성
 model = Sequential()
-model.add(GRU(units = 64, input_shape=(3, 1),
+model.add(LSTM(units = 64, input_shape=(3, 1),
                activation='relu'))
 model.add(Dense(32, activation='relu'))
 model.add(Dense(32, activation='relu'))
-model.add(Dense(16, activation='relu'))
+model.add(Dense(16, activation='relu')) 
 model.add(Dense(8, activation='relu'))
 model.add(Dense(1))
 model.summary()
  
  # 컴파일 훈련
 model.compile(loss='mse', optimizer='adam')
-model.fit(x, y, epochs=500, batch_size=32)
+model.fit(x, y, epochs=300, batch_size=32)
 
 # 평가, 예측
 loss = model.evaluate(x, y)
 print('loss :', loss)
-x_pred = x_predict.reshape(1, 3, 1)
-result =model.predict(x_pred)
+y_pred = x_predict.reshape(1, 3, 1)
+result =model.predict(y_pred)
 print('[50, 60, 70]의 결과 :', result)
