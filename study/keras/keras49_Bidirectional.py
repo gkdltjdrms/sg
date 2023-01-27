@@ -43,7 +43,7 @@ x_predict = x_predict.reshape(7,4,1)
 
 model = Sequential()
 # model.add(LSTM(64, input_shape=(4, 1), activation='relu'))
-model.add(Bidirectional(LSTM(64, input_shape=(4, 1), activation='relu')))
+model.add(Bidirectional(LSTM(64),input_shape=(4, 1)))
 model.add(Dense(32, activation='relu'))
 model.add(Dense(32, activation='relu'))
 model.add(Dense(32, activation='relu'))
@@ -51,12 +51,12 @@ model.add(Dense(16, activation='relu'))
 model.add(Dense(1))
 model.summary()
 
-# # 컴파일 훈련
-# model.compile(loss='mse', optimizer='adam')
-# model.fit(x_train, y_train, epochs=100, batch_size=8, verbose=3)
+# 컴파일 훈련
+model.compile(loss='mse', optimizer='adam')
+model.fit(x_train, y_train, epochs=500, batch_size=32, verbose=3)
 
-# # 평가, 예측
-# loss = model.evaluate(x_test, y_test)
-# print('loss :', loss)
-# result =model.predict(x_predict)
-# print('예측 결과 :', result)
+# 평가, 예측
+loss = model.evaluate(x_test, y_test)
+print('loss :', loss)
+result =model.predict(x_predict)
+print('예측 결과 :', result)
