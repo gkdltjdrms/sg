@@ -1,6 +1,6 @@
 import numpy as np  
 from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense, SimpleRNN, Dropout, LSTM, Bidirectional
+from tensorflow.keras.layers import Dense, SimpleRNN,Flatten, Dropout, LSTM, Bidirectional
 from sklearn.model_selection import train_test_split
 from tensorflow.keras.layers import Conv1D
 dataset = np.array(range(1,101))
@@ -48,6 +48,7 @@ model = Sequential()
 model.add(Conv1D(100,2, input_shape=(4,1)))
 model.add(Conv1D(32,2, activation='relu'))
 model.add(Conv1D(32,2, activation='relu'))
+model.add(Flatten())
 model.add(Dense(32, activation='relu'))
 model.add(Dense(32, activation='relu'))
 model.add(Dense(16, activation='relu'))

@@ -49,7 +49,7 @@ path = './_save/'
 
 # 2. 모델 구성(순차형)==============================================
 model = Sequential()
-model.add(Conv1D(64,2, input_shape=(13,1)))
+model.add(LSTM(64, input_shape=(13,1)))
 model.add(Flatten())
 model.add(Dense(64, activation='relu'))
 model.add(Dropout(0.2))
