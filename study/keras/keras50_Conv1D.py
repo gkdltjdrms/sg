@@ -49,13 +49,14 @@ model.add(Conv1D(100,2, input_shape=(4,1)))
 model.add(Conv1D(32,2, activation='relu'))
 model.add(Conv1D(32,2, activation='relu'))
 model.add(Dense(32, activation='relu'))
+model.add(Dense(32, activation='relu'))
 model.add(Dense(16, activation='relu'))
 model.add(Dense(1))
 model.summary()
 
 # 컴파일 훈련
 model.compile(loss='mse', optimizer='adam')
-model.fit(x_train, y_train, epochs=1000, batch_size=32, verbose=3)
+model.fit(x_train, y_train, epochs=100, batch_size=8, verbose=3)
 
 # 평가, 예측
 loss = model.evaluate(x_test, y_test)
