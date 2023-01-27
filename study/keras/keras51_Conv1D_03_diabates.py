@@ -1,22 +1,22 @@
  
 import sklearn as sk
 from tensorflow.keras.models import Sequential,Model,load_model
-from tensorflow.keras.layers import Dense,Conv1D,Input, Dropout,LSTM, Conv2D, Flatten
+from tensorflow.keras.layers import Dense,Conv1D,Input,LSTM, Dropout, Conv2D, Flatten
 import numpy as np
 from sklearn.model_selection import train_test_split
-from sklearn.datasets import load_boston
+from sklearn.datasets import load_diabetes
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
 from sklearn.metrics import mean_squared_error, r2_score
 
 
 #!. 데이터
-dataset = load_boston()
+dataset = load_diabetes()
 x = dataset.data
 y = dataset.target
 
 
 x_train, x_test, y_train, y_test = train_test_split(x, y,
-      train_size=0.2,
+      train_size=0.7,
       shuffle=True,
       random_state=333                                                    
                                                     )
@@ -24,13 +24,13 @@ x_train, x_test, y_train, y_test = train_test_split(x, y,
 scaler = MinMaxScaler()  # train을 기준으로 삼는다
 scaler.fit(x_train)
 x_train = scaler.transform(x_train)
+# x_train = scaler.fit_transform(X_train)
 x_test = scaler.transform(x_test)
 
-print(x_train.shape, x_test.shape)  # (101, 13) (405, 13)
-x_train = x_train.reshape(101, 13, 1, 1)
-x_test = x_test.reshape(405, 13, 1, 1)
-print(x_train.shape, x_test.shape)  # (101, 13, 1, 1) (405, 13, 1, 1)
-# #==========================================================
+print(x_train.shape, x_test.shape)  # (309, 10) (133, 10)
+x_train = x_train.reshape(309, 10, 1, 1)
+x_test = x_test.reshape(133, 10, 1, 1)
+
 import datetime 
 date = datetime.datetime.now()
 print(date)
@@ -49,7 +49,7 @@ path = './_save/'
 
 # 2. 모델 구성(순차형)==============================================
 model = Sequential()
-model.add(Conv1D(64,2, input_shape=(13,1)))
+model.add(Conv1D(64,2, input_shape=(10,1)))
 model.add(Flatten())
 model.add(Dense(64, activation='relu'))
 model.add(Dropout(0.2))
@@ -59,21 +59,21 @@ model.add(Dense(1))
 model.summary()  
 # =============================================================
 
-# # #2. 모델 구성 (함수형)==============================================
+# #2. 모델 구성 (함수형)==============================================
 
-# # input1 = Input(shape=(13,))
-# # dense1 = Dense(50, activation='relu')(input1)
-# # drop1 = Dropout(0.5)(dense1)
-# # dense2 = Dense(40, activation='sigmoid')(drop1)
-# # drop2 = Dropout(0.5)(dense2)
-# # dense3 = Dense(50, activation='relu')(drop2)
-# # drop3 = Dropout(0.5)(dense3)
-# # dense4 = Dense(50, activation='linear')(drop3)
-# # output1 = Dense(1, activation='linear')(dense4)
+# input1 = Input(shape=(13,))
+# dense1 = Dense(50, activation='relu')(input1)
+# drop1 = Dropout(0.5)(dense1)
+# dense2 = Dense(40, activation='sigmoid')(drop1)
+# drop2 = Dropout(0.5)(dense2)
+# dense3 = Dense(50, activation='relu')(drop2)
+# drop3 = Dropout(0.5)(dense3)
+# dense4 = Dense(50, activation='linear')(drop3)
+# output1 = Dense(1, activation='linear')(dense4)
 
-# # model = Model(inputs=input1, outputs = output1)
-# # model.summary()  
-# # # =================================================================
+# model = Model(inputs=input1, outputs = output1)
+# model.summary()  
+# # =================================================================
 
 # #3. 컴파일. 훈련
 # import time
@@ -84,7 +84,7 @@ from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
 
 es = EarlyStopping(monitor='val_loss',
                               mode='min', 
-                              patience=100,
+                              patience=20,
                               restore_best_weights=False,
                               verbose=1)
 
@@ -95,13 +95,13 @@ mcp = ModelCheckpoint(monitor='val_loss', mode='auto', verbose=1,
 
 # # start=time.time()
 
-model.fit(x_train, y_train, epochs=500, batch_size=32,
+model.fit(x_train, y_train, epochs=2000, batch_size=32,
           validation_split=0.2,
           callbacks=[es, mcp],
           verbose=1)
 
 
-# model.save(path + 'keras30_ModelCheckPoint3_save_model.h5')
+model.save(path + 'keras30_ModelCheckPoint3_save_model.h5')
 
 
 # model= load_model(path + 'MCP/keras30_ModelCheckPoint1.hdf5')

@@ -54,7 +54,7 @@ mcp = ModelCheckpoint(monitor='val_loss',
 
 model.compile(loss='sparse_categorical_crossentropy', optimizer='adam', 
               metrics=['acc'])
-model.fit(x_train, y_train, epochs=55, verbose=1, batch_size=512,
+model.fit(x_train, y_train, epochs=1, verbose=1, batch_size=512,
           validation_split=0.3,
           callbacks=[es, mcp])
 
