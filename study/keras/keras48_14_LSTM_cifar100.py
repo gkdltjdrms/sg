@@ -2,7 +2,7 @@
 from tensorflow.keras.datasets import cifar10, cifar100
 import numpy as np
 from tensorflow.keras.models import Sequential,Model
-from tensorflow.keras.layers import Conv2D, Dense,Input,LSTM, Flatten, Dropout, MaxPooling2D
+from tensorflow.keras.layers import Conv2D, Dense,LSTM,Input, Flatten, Dropout, MaxPooling2D
 import datetime 
 from tensorflow.keras.callbacks import EarlyStopping,ModelCheckpoint
 from tensorflow.keras.utils import to_categorical
@@ -24,16 +24,15 @@ print(x_train.shape, y_train.shape) # (50000, 32, 32, 3)
 print(x_test.shape, y_test.shape)   # (10000, 32, 32, 3) 
 
 
-
 date = datetime.datetime.now()
 date = date.strftime("%m%d_%H%M")
 filepath = './_save/MCP/'
 filename = '{epoch:04d}-{val_loss:.4f}.hdf5'  # 0037-0.0048.hdf5
 path = './_save/'
 
-# 2. 모델 구성
+#2. 모델 구성
 model = Sequential()
-model.add(LSTM(64, activation='relu', input_shape=(32,3)))
+model.add(LSTM(64, activation='relu', input_shape=(3072,1)))
 model.add(Dense(32, activation='relu'))
 model.add(Dropout(0.3))
 model.add(Dense(32, activation='relu'))
@@ -42,8 +41,10 @@ model.add(Dropout(0.2))
 model.add(Dense(64, activation='relu'))
 model.add(Dense(32, activation='relu'))
 model.add(Dense(10, activation='softmax')) 
-#
+##
 
+# model = Model(inputs=input1, outputs = output1)
+model.summary()  #4,611
 
 
 #3. 컴파일, 훈련
