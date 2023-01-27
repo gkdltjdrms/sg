@@ -1,4 +1,4 @@
-
+## return_sequential
 import numpy as np  
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, SimpleRNN, Dropout, LSTM, Bidirectional
@@ -43,7 +43,8 @@ x_predict = x_predict.reshape(7,4,1)
 
 model = Sequential()
 # model.add(LSTM(64, input_shape=(4, 1), activation='relu'))
-model.add(Bidirectional(LSTM(64),input_shape=(4, 1)))
+model.add(Bidirectional(LSTM(64,return_sequences=True),
+                        input_shape=(4, 1)))
 model.add(Dense(32, activation='relu'))
 model.add(Dense(32, activation='relu'))
 model.add(Dense(32, activation='relu'))
