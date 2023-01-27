@@ -5,7 +5,7 @@ from sklearn.model_selection import train_test_split
 dataset = np.array(range(1,101))
 x_predict = np.array(range(96,106))  # 예상 y = 100, 107
 
-timesteps = 5     # x = 4개 y = 1개
+timesteps = 5     
 
 def split_x(dataset, timesteps):
     aaa = []
@@ -28,20 +28,15 @@ x_train, x_test, y_train, y_test = train_test_split(x, y,
       train_size=0.75,
       random_state=123)
 
-x_train = x_train.reshape(72,4,1)
-x_test = x_test.reshape(24,4,1)
-x_predict = x_predict.reshape(7,4,1)
+
+x_train = x_train.reshape(72,2,2)   # 72,1,4 를 72,2,2
+x_test = x_test.reshape(24,2,2)
+x_predict = x_predict.reshape(7,2,2)
 
 
-# print (x,y)
-# print (x.shape, y.shape) # (96,4)
-# x = x.reshape(96,4,1)
-# # x_predict = np.array(range(96,106))
-# print(x_predict.shape)
-# print(x.shape)
 
 model = Sequential()
-model.add(LSTM(64, input_shape=(4, 1), activation='relu'))
+model.add(LSTM(64, input_shape=(2, 2), activation='relu'))
 model.add(Dense(32, activation='relu'))
 model.add(Dense(32, activation='relu'))
 model.add(Dense(32, activation='relu'))
