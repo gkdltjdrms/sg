@@ -8,6 +8,7 @@ x1_datasets = np.array([range(100), range(301,401)]).transpose()
 x2_datasets = np.array([range(101,201), range(411,511),range(150,250)]).T
 # print (x2_datasets.shape) # (100, 3)
 x3_datasets = np.array([range(100,200),range(1301,1401)]).T
+
 y1 = np.array(range(2001,2101)) # 삼성
 y2 = np.array(range(201,301))  # 아모레
 x1_train, x1_test, x2_train, x2_test,x3_train,\
@@ -38,6 +39,7 @@ dense31 = Dense(21, activation='relu', name='ds31')(input3)
 dense32 = Dense(22, activation='relu', name='ds32')(dense31)
 dense33 = Dense(23, activation='relu', name='ds33')(dense32)
 
+
 from tensorflow.keras.layers import concatenate # 모델들을 사슬 처럼 엮는다
 merge1 = concatenate([dense4, dense23,dense33], name='mg1')
 merge2 = Dense(12,activation='relu', name='mg2')(merge1)
@@ -46,7 +48,6 @@ last_output = Dense(1, name='last')(merge2)
 
 model = Model(inputs=[input1, input2, input3], outputs=last_output)
 model.summary()
-
 
 #2-5 모델
 
