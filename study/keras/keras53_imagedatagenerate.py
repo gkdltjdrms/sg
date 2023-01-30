@@ -44,6 +44,10 @@ print (xy_train[0][0].shape)  # (10, 200, 200, 10)
 print (xy_train[0][1].shape)  # (10,)
 # batch_size 를 크게 잡았을때 데이터의 개수를 확인할수 있다.
 print (type(xy_train[0])) # <class 'tuple'>
+print(type(xy_train[0][0]))# <class 'numpy.ndarray'>
+print(type(xy_train[0][1]))# <class 'numpy.ndarray'>
+
+
 
 
 
