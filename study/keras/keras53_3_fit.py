@@ -38,6 +38,12 @@ xy_test = train_datagen.flow_from_directory(
     shuffle=True,
      # Found 120 images belonging to 2 classes.
 )
+# batch_size = 1000 인 경우
+print(xy_train[0][0].shape, xy_train[0][1].shape)#(160, 100, 100, 1) (160,)
+print(xy_test[0][0].shape, xy_test[0][1].shape) #(120, 100, 100, 1) (120,)
+# batch_size = 10 인 경우
+print(xy_train[0][0].shape, xy_train[0][1].shape)# (10, 100, 100, 1) (10,)
+print(xy_test[0][0].shape, xy_test[0][1].shape)# (10, 100, 100, 1) (10,)
 
 #2 모델 구성
 from tensorflow.keras.models import Sequential
@@ -64,11 +70,11 @@ model.compile(loss='binary_crossentropy', optimizer='adam',
 #                     validation_data=xy_test,
 #                     validation_steps=4, )
 
-hist = model.fit(xy_train[0][0],xy_train[0][1],
-                #  steps_per_epoch=10,
-                 epochs=300,
-                 validation_data=(xy_test[0][0],xy_test[0][1]))
-                #  validation_steps=4,)
+hist = model.fit(xy_train[0][0],xy_train[0][1],  # (160, 100, 100, 1) (160,)
+        #  steps_per_epoch=10,
+        epochs=300,
+        validation_data=(xy_test[0][0],xy_test[0][1])) #(120, 100, 100, 1) (120,)
+        #  validation_steps=4,)
 
 acc = hist.history['acc']
 val_acc = hist.history['val_acc']
