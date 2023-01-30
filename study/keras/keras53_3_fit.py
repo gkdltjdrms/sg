@@ -59,9 +59,16 @@ model.summary()
 model.compile(loss='binary_crossentropy', optimizer='adam',
               metrics=['acc'])
 
-hist = model.fit_generator(xy_train, steps_per_epoch=10, epochs=300,
-                    validation_data=xy_test,
-                    validation_steps=4, )
+# hist = model.fit_generator(xy_train, steps_per_epoch=10,
+#                     epochs=300,
+#                     validation_data=xy_test,
+#                     validation_steps=4, )
+
+hist = model.fit(xy_train[0][0],xy_train[0][1],
+                #  steps_per_epoch=10,
+                 epochs=300,
+                 validation_data=(xy_test[0][0],xy_test[0][1]))
+                #  validation_steps=4,)
 
 acc = hist.history['acc']
 val_acc = hist.history['val_acc']
