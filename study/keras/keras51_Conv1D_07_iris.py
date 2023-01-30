@@ -35,7 +35,7 @@ x_test = x_test.reshape(30, 4, 1)
 
 #2. model
 model = Sequential()
-model.add(Conv1D(512, 1, input_shape=(4,1)))
+model.add(Conv1D(64, 1, input_shape=(4,1)))
 model.add(Flatten())
 model.add(Dense(50, activation = 'relu'))
 model.add(Dense(40, activation = 'sigmoid'))
@@ -50,7 +50,7 @@ model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accur
 
 
 from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
-es = EarlyStopping(monitor='val_loss', mode='min', patience=1, restore_best_weights=True, verbose=1)
+es = EarlyStopping(monitor='val_loss', mode='min', patience=50, restore_best_weights=True, verbose=1)
 
 # import datetime
 # date = datetime.datetime.now()
@@ -62,7 +62,7 @@ es = EarlyStopping(monitor='val_loss', mode='min', patience=1, restore_best_weig
 # mcp = ModelCheckpoint(monitor='val_loss', mode='auto', verbose=1, save_best_only=True,
 #                      filepath = filepath + 'k39_07_' + date + '_' + filename)
 
-model.fit(x_train, y_train, epochs=1, batch_size=1, validation_split=0.2, verbose=1,
+model.fit(x_train, y_train, epochs=1000, batch_size=1, validation_split=0.2, verbose=1,
           callbacks=[es])
 # callbacks=[es,mcp]
 
