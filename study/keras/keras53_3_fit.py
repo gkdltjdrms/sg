@@ -4,15 +4,23 @@ from tensorflow.keras.preprocessing.image import ImageDataGenerator
 #1 데이터
 
 train_datagen = ImageDataGenerator(
-    rescale=1./255,
-    horizontal_flip=True,
-    vertical_flip=True,
-    width_shift_range=0.1,
-    height_shift_range=0.1,
-    rotation_range= 5,
-    zoom_range=1.2,
-    shear_range=0.7, 
-    fill_mode='nearest'
+    rescale=1./255,       # 각 픽셀 값을 255로 나누어 [0, 1] 범위로 다시 조정합니다.
+    horizontal_flip=True, # 수평방향으로 뒤집기를 한다.
+    vertical_flip=True,   # 수직방향으로 뒤집기를 한다. 
+    width_shift_range=0.1, # 지정된 수평방향 이동 범위내에서 임의로 원본이미지를 이동시킨다.
+    # 수치는 전체 넓이의 비율(실수)로 나타낸다. 예를 들어 0.1이고 전체 넓이가 100이면,
+    # 10픽셀 내외로 좌우 이동시킨다. 
+    height_shift_range=0.1,# 지정된 수직방향 이동 범위내에서 임의로 원본이미지를 이동시킨다.
+    # 수치는 전체 높이의 비율(실수)로 나타낸다.
+    # 예를 들어 0.1이고 전체 높이가 100이면, 10픽셀 내외로 상하 이동시킨다. 
+    rotation_range= 5,  # 지정된 각도 범위내에서 임의로 원본이미지를 회전시킴. 단위는 도이며,
+    # 정수형이다. 예를 들어 90이라면 0도에서 90도 사이에 임의의 각도로 회전시킨다. 
+    zoom_range=1.2,# 지정된 확대/축소 범위내에서 임의로 원본이미지를 확대/축소한다. 
+    # “1-수치”부터 “1+수치”사이 범위로 확대/축소를 한다.예를 들어 0.3이라면, 0.7배에서 1.3배 크기 변화를 시킨다. 
+    shear_range=0.7, # 밀림 강도 범위내에서 임의로 원본이미지를 변형시킨다. 수치는 시계
+    # 반대방향으로 밀림 강도를 라디안으로 나타낸다.
+    # 예를 들어 0.5이라면, 0.5 라이안내외로 시계반대방향으로 변형시킨다. 
+    fill_mode='nearest'  # 이미지의 정보 또는 데이터 손실을 방지하는 데 도움이 될 수 있습니다.
 )
 
 test_datagen = ImageDataGenerator(
@@ -45,6 +53,7 @@ print(xy_test[0][0].shape, xy_test[0][1].shape) #(120, 100, 100, 1) (120,)
 print(xy_train[0][0].shape, xy_train[0][1].shape)# (10, 100, 100, 1) (10,)
 print(xy_test[0][0].shape, xy_test[0][1].shape)# (10, 100, 100, 1) (10,)
 
+# print(xy_train.imageshape)
 #2 모델 구성
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense,Conv2D,Flatten
@@ -65,10 +74,11 @@ model.summary()
 model.compile(loss='binary_crossentropy', optimizer='adam',
               metrics=['acc'])
 
-# hist = model.fit_generator(xy_train, steps_per_epoch=10,
+# hist = model.fit_generator(xy_train,
+#                     steps_per_epoch=10, #generator에서만 사용가능
 #                     epochs=300,
 #                     validation_data=xy_test,
-#                     validation_steps=4, )
+#                     validation_steps=4,) #generator에서만 사용가능
 
 hist = model.fit(xy_train[0][0],xy_train[0][1],  # (160, 100, 100, 1) (160,)
         #  steps_per_epoch=10,
