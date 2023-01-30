@@ -1,6 +1,8 @@
 import numpy as np 
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
+#1 데이터
+
 train_datagen = ImageDataGenerator(
     rescale=1./255,
     horizontal_flip=True,
@@ -19,7 +21,7 @@ test_datagen = ImageDataGenerator(
 
 xy_train = train_datagen.flow_from_directory(
     './_data/brain/train', 
-    target_size=(200, 200),
+    target_size=(100, 100),
     batch_size=10,
     class_mode='binary',
     color_mode='grayscale',
@@ -29,7 +31,7 @@ xy_train = train_datagen.flow_from_directory(
 # train_datagen.flow_from_directory()
 xy_test = train_datagen.flow_from_directory(
     './_data/brain/test', 
-    target_size=(200, 200),
+    target_size=(100, 100),
     batch_size=10,
     class_mode='binary',
     color_mode='grayscale',
@@ -37,16 +39,31 @@ xy_test = train_datagen.flow_from_directory(
      # Found 120 images belonging to 2 classes.
 )
 
-print(xy_train) #<keras.preprocessing.image.DirectoryIterator 
-# object at 0x000001E82599C0A0>
+#2 모델 구성
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense,Conv2D,Flatten
 
-print (xy_train[0][0].shape)  # (10, 200, 200, 10)
-print (xy_train[0][1].shape)  # (10,)
-# batch_size 를 크게 잡았을때 데이터의 개수를 확인할수 있다.
-print (type(xy_train[0])) # <class 'tuple'>
-print(type(xy_train[0][0]))# <class 'numpy.ndarray'>
-print(type(xy_train[0][1]))# <class 'numpy.ndarray'>
+model = Sequential()
+model.add(Conv2D(64, (2,2), input_shape = (100, 100, 1)))
+model.add(Conv2D(64,(3,3), activation='relu'))
+model.add(Conv2D(64,(3,3), activation='relu'))
+model.add(Flatten())
+model.add(Dense(32, activation='relu'))
+model.add(Dense(64, activation='relu'))
+model.add(Dense(32, activation='relu'))
+model.add(Dense(1, activation='sigmoid'))
+model.summary()
 
+#3 컴파일 훈련
+
+model.compile(loss='binary_crossentropy', optimizer='adam',
+              metrics=['acc'])
+
+model.fit_generator(xy_train, steps_per_epoch=10, epochs=500,
+                    validation_data=xy_test,
+                    validation_steps=4, )
+loss = model.evaluate(xy_test)
+print ('loss, acc :', loss)
 
 
 
