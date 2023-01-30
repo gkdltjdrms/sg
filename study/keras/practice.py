@@ -1,45 +1,49 @@
-import numpy as np  
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense, SimpleRNN, Dropout, LSTM
-dataset = np.array(range(1,101))
+import numpy as np 
+from tensorflow.keras.models import Model
+from tensorflow.keras.layers import Input, Dense, concatenate
+from sklearn.model_selection import train_test_split
 
+x1_datasets = np.array([range(100), range(301,401)]).transpose()
+x2_datasets = np.array([range(101,201), range(411,511),range(150,250)]).T
+x3_datasets = np.array([range(100,200),range(1301,1401)]).T
+y = np.array(range(2001,2101))
+y2 = np.array(range(201,301))
 
-timesteps = 5     # x = 4개 y = 1개
+x1_train, x1_test, x2_train, x2_test,x3_train,x3_test,y_train, y_test,y2_train,y2_test = train_test_split(
+    x1_datasets, x2_datasets,x3_datasets, y, y2, train_size=0.7, random_state=1234
+)
 
-def split_x(dataset, timesteps):
-    aaa = []
-    for i in range(len(dataset) - timesteps + 1):
-        subset = dataset[i : (i + timesteps)]
-        aaa.append(subset)
-    return np.array(aaa)
+# Model 1
+input1 = Input(shape=(2,))
+dense1 = Dense(11, activation='relu')(input1)
+dense2 = Dense(12, activation='relu')(dense1)
+dense3 = Dense(13, activation='relu')(dense2)
+dense4 = Dense(14, activation='relu')(dense3)
 
-bbb = split_x(dataset, timesteps)
-print(bbb, bbb.shape)
+# Model 2
+input2 = Input(shape=(3,))
+dense21 = Dense(21, activation='linear')(input2)
+dense22 = Dense(22, activation='linear')(dense21)
+dense23 = Dense(23, activation='linear')(dense22)
 
-x = bbb[:, :-1]
-y = bbb[:, -1]
-print (x,y)
-print (x.shape, y.shape) # (96,4)
-x = x.reshape(97,4,1)
-# x_predict = np.array(range(96,106))
-print(x.shape)
-model = Sequential()
-model.add(LSTM(64, input_shape=(4, 1), activation='relu'))
-model.add(Dense(32, activation='relu'))
-model.add(Dense(32, activation='relu'))
-model.add(Dense(32, activation='relu'))
-model.add(Dense(16, activation='relu'))
-model.add(Dense(1))
-model.summary()
+# Model 3
+input3 = Input(shape=(2,))
+dense31 = Dense(21, activation='linear')(input3)
+dense32 = Dense(22, activation='linear')(dense31)
+dense33 = Dense(23, activation='linear')(dense32)
 
-# 컴파일 훈련
+# Merge Models
+merge = concatenate([dense4, dense23,dense33])
+dense_merge = Dense(12, activation='relu')(merge)
+dense_merge2 = Dense(13)(dense_merge)
+output = Dense(1)(dense_merge2)
+
+model = Model(inputs=[input1, input2, input3], outputs=output)
 model.compile(loss='mse', optimizer='adam')
-model.fit(x, y, epochs=2, batch_size=8, verbose=3)
+model.fit([x1_train, x2_train, x3_train], y_train, epochs=500, batch_size=32)
 
-# 평가, 예측
-x_predict = np.array(range(96,106))  # 예상 y = 100, 107
-loss = model.evaluate(x, y)
-print('loss :', loss)
-x_pred = x_predict.reshape.split_x(dataset, timesteps-1)
-result =model.predict(x_pred)
-print('[96,106]의 결과 :', result)
+# Evaluate
+loss = model.evaluate([x1_test, x2_test, x3_test], y_test)
+print('Loss:', loss)
+y_predict = model.predict([x1_test, x2_test, x3_test])
+print('Prediction:', y_predict)
