@@ -1,127 +1,54 @@
-import numpy as np
-import pandas as pd
-from tensorflow.keras.models import Model
-from tensorflow.keras.layers import Dense, Dropout, Input, LSTM, concatenate
-from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
-from sklearn. preprocessing import MinMaxScaler
+import numpy as np 
+from tensorflow.keras.models import Sequential,Model
+from tensorflow.keras.layers import Dense,Conv1D,Input, Dropout,LSTM, Conv2D, Flatten
 from sklearn.model_selection import train_test_split
-import datetime
+x1_datasets = np.array([range(100), range(301,401)]).transpose()
+# print (x1_datasets.shape) # (100, 2)
 
-PATH = './_data/stock/'
+x2_datasets = np.array([range(101,201), range(411,511),range(150,250)]).T
+# print (x2_datasets.shape) # (100, 3)
+x3_datasets = np.array([range(100,200),range(1301,1401)]).T
+y = np.array(range(2001,2101)) # 삼성전자의 하루뒤 주가
 
-samsung = pd.read_csv(PATH + '삼성전자 주가.csv', header=0, index_col=None, sep=',', encoding='cp949', thousands=',').loc[::-1]
-# print(samsung)
-# print(samsung.shape) #(1980, 17)
+x1_train, x1_test, x2_train, x2_test,x3_train,x3_test,y_train, y_test =train_test_split(x1_datasets,
+                                                                       x2_datasets,x3_datasets,
+                                                                       y,train_size=0.7,
+                                                                       random_state=1234)
 
-amore = pd.read_csv(PATH + '아모레퍼시픽 주가.csv', header=0, index_col=None, sep=',', encoding='cp949', thousands=',').loc[::-1]
-# print(amore)
-# print(amore.shape)   #(2220, 17)
+print(x1_train.shape,x2_train.shape,x3_train.shape)
 
-# 삼성전자 x ,y 추출
-samsung_x = samsung[['고가', '저가','종가', '외인(수량)', '기관']]
-samsung_y = samsung[['시가']].to_numpy() # x 데이터는 아래에서 split 함수를 거치며 numpy array로 변환되므로 y는 여기서 변환해준다
+#2-1 모델
+input1 = Input(shape=(2,))
+dense1 = Dense(11, activation='relu', name='ds11')(input1)
+dense2 = Dense(12, activation='relu', name='ds12')(dense1)
+dense3 = Dense(13, activation='relu', name='ds13')(dense2)
+dense4 = Dense(14, activation='relu', name='ds14')(dense3)
 
-# print(samsung_x)
-# print(samsung_y)
-# print(samsung_x.shape) # (1980, 5)
-# print(samsung_y.shape) # (1980, 1)
+#2-2 모델
+input2 = Input(shape=(3,))
+dense21 = Dense(21, activation='linear', name='ds21')(input2)
+dense22 = Dense(22, activation='linear', name='ds22')(dense21)
+dense23 = Dense(23, activation='linear', name='ds23')(dense22)
 
-# 아모레 x, y 추출
-amore_x = amore.loc[1979:0,['고가', '저가', '종가', '외인(수량)', '시가']]
-# print(amore_x)
-# print(amore_x.shape) #(1980, 5)
+#2-3 모델
+input3 = Input(shape=(2,))
+dense31 = Dense(21, activation='linear', name='ds31')(input3)
+dense32 = Dense(22, activation='linear', name='ds32')(dense31)
+dense33 = Dense(23, activation='linear', name='ds33')(dense32)
 
-samsung_x = MinMaxScaler().fit_transform(samsung_x)
-amore_x = MinMaxScaler().fit_transform(amore_x)
+from tensorflow.keras.layers import concatenate # 모델들을 사슬 처럼 엮는다
+merge1 = concatenate([dense4, dense23,dense33], name='mg1')
+merge2 = Dense(12,activation='relu', name='mg2')(merge1)
+merge3 = Dense(13, name='mg3')
+last_output = Dense(1, name='last')(merge2)
 
-def split_data(dataset, timesteps):
-    tmp = []
-    for i in range(len(dataset) - timesteps + 1):
-        subset = dataset[i : (i + timesteps)]
-        tmp.append(subset)
-    return np.array(tmp)
-
-samsung_x = split_data(samsung_x, 5)
-amore_x = split_data(amore_x, 5)
-# print(samsung_x.shape) #(1976, 5, 5)
-# print(amore_x.shape) #(1976, 5, 5)
-
-samsung_y = samsung_y[4:, :] # x 데이터와 shape을 맞춰주기 위해 4개 행 제거
-# print(samsung_y.shape) #(1976, 1)
-
-# 예측에 사용할 데이터 추출 (마지막 값)
-samsung_x_predict = samsung_x[-1].reshape(-1, 5, 5)
-amore_x_predict = amore_x[-1].reshape(-1, 5, 5)
-# print(samsung_x_predict.shape) # (5, 5, 1)
-# print(amore_x_predict.shape) # (5, 5, 1)
-
-samsung_x_train, samsung_x_test, samsung_y_train, samsung_y_test, amore_x_train, amore_x_test  = train_test_split(
-    samsung_x, samsung_y, amore_x, train_size=0.7, random_state=333)
-
-print(samsung_x_train.shape, samsung_x_test.shape)  # (1383, 5, 5) (593, 5, 5)
-print(samsung_y_train.shape, samsung_y_test.shape) # (1383, 1) (593, 1)
-print(amore_x_train.shape, amore_x_test.shape)  # (1383, 5, 5) (593, 5, 5)
-
-# 삼성전자
-input_sm = Input(shape=(5, 5))
-dense_sm1 = LSTM(64, return_sequences=True,activation='relu')(input_sm)
-dense_sm2 = Dropout(0.25)(dense_sm1)
-dense_sm3 = LSTM(64, activation='relu')(dense_sm2)
-dense_sm4 = Dense(128, activation='relu')(dense_sm3)
-dense_sm5 = Dropout(0.25)(dense_sm4)
-dense_sm6 = Dense(64, activation='relu')(dense_sm5)
-dense_sm7 = Dense(64, activation='relu')(dense_sm6)
-dense_sm8 = Dropout(0.25)(dense_sm7)
-dense_sm9 = Dense(32, activation='relu')(dense_sm8)
-output_sm = Dense(1)(dense_sm9)
-
-# 아모레퍼시픽
-input_am = Input(shape=(5, 5))
-dense_am1 = LSTM(64, return_sequences=True,activation='relu')(input_am)
-dense_am2 = Dropout(0.2)(dense_am1)
-dense_am3 = LSTM(125, activation='relu')(dense_am2)
-dense_am4 = Dense(512, activation='relu')(dense_am3)
-dense_am5 = Dropout(0.2)(dense_am4)
-dense_am6 = Dense(512, activation='relu')(dense_am5)
-dense_am7 = Dense(64, activation='relu')(dense_am6)
-dense_am8 = Dropout(0.2)(dense_am7)
-dense_am9 = Dense(32, activation='relu')(dense_am8)
-output_am = Dense(1)(dense_am9)
-
-# 병합
-merge1 = concatenate([output_sm, output_am])
-merge2 = Dense(64, activation='relu')(merge1)
-merge3 = Dense(64, activation='relu')(merge2)
-merge4 = Dense(32, activation='relu')(merge3)
-merge5 = Dense(16, activation='relu')(merge4)
-output_mg = Dense(1, activation='relu')(merge5)
-
-model = Model(inputs=[input_sm, input_am], outputs=[output_mg])
+model = Model(inputs=[input1, input2, input3], outputs=last_output)
 model.summary()
 
-model.compile(loss='mse', optimizer= 'adam')
+#3 컴파일, 훈련
+model.compile(loss = 'mse',optimizer='adam')
+model.fit([x1_train,x2_train,x3_train],y_train, epochs=10,batch_size=1)
 
-date = datetime.datetime.now()
-date = date.strftime("%m%d_%H%M")
-filepath = './_save/MCP/'
-filename = '{epoch:04d}-{val_loss:.4f}.hdf5'
-
-es = EarlyStopping(monitor='val_loss', patience=75, mode='min',
-                              restore_best_weights=True,                        
-                              verbose=1 
-                              )
-
-mcp = ModelCheckpoint(monitor='val_loss', mode='auto', verbose=1,
-                      save_best_only=True,
-                    #   filepath = path +'MCP/keras30_ModelCheckPoint3.hdf5'
-                      filepath = filepath + 'k52_Samsung' + date + '_' + filename
-                      )
-model.fit([samsung_x_train, amore_x_train], samsung_y_train , epochs=1500, batch_size=128, validation_split=0.2, callbacks=[es, mcp])
-
-model.save_weights(PATH + 'stock_weight.h5') # 가중치만 저장
-
-loss=model.evaluate([samsung_x_test, amore_x_test], samsung_y_test, batch_size=1024)
-samsung_y_predict=model.predict([samsung_x_predict, amore_x_predict])
-
-print("loss : ", loss)
-print("삼성전자 시가 :" , samsung_y_predict)
+#4 평가, 예측
+loss = model.evaluate([x1_test,x2_test,x3_test],y_test)
+print('loss : ', loss)
