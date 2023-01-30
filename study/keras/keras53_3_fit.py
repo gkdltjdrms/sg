@@ -22,7 +22,7 @@ test_datagen = ImageDataGenerator(
 xy_train = train_datagen.flow_from_directory(
     './_data/brain/train', 
     target_size=(100, 100),
-    batch_size=10,
+    batch_size=1000,
     class_mode='binary',
     color_mode='grayscale',
     shuffle=True,
@@ -32,7 +32,7 @@ xy_train = train_datagen.flow_from_directory(
 xy_test = train_datagen.flow_from_directory(
     './_data/brain/test', 
     target_size=(100, 100),
-    batch_size=10,
+    batch_size=1000,
     class_mode='binary',
     color_mode='grayscale',
     shuffle=True,
@@ -73,9 +73,6 @@ print ('val_loss :', val_loss[-1])
 print ('acc :',acc[-1])
 print ('val_acc :', val_acc[-1])
 
-# loss : 0.3383846580982208
-# val_loss : 0.4888327717781067
-# acc : 0.8600000143051147
-# val_acc : 0.8500000238418579
+
 
 
