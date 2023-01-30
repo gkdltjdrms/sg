@@ -27,18 +27,18 @@ print(x_test.shape, y_test.shape)   #(10000, 3072,1) (10000,1)
 
 #2. 모델
 model = Sequential()
-model.add(Conv1D(100, 3, input_shape = (3072, 1), activation='relu'))
-model.add(LSTM(100, activation='relu'))
+model.add(Conv1D(32, 3, input_shape = (3072, 1), activation='relu'))
+model.add(LSTM(32, activation='relu'))
 model.add(Dropout(0.3))
-model.add(Dense(100, activation='relu'))
-model.add(Dense(100, activation='relu'))
-model.add(Dense(200, activation='relu'))
-model.add(Dense(100, activation='relu'))
+model.add(Dense(16, activation='relu'))
+model.add(Dense(16, activation='relu'))
+model.add(Dense(16, activation='relu'))
+model.add(Dense(16, activation='relu'))
 model.add(Dropout(0.3))
-model.add(Dense(100, activation='relu'))
-model.add(Dense(100, activation='relu'))
-model.add(Dense(100, activation='relu'))
-model.add(Dense(100, activation='linear'))
+model.add(Dense(16, activation='relu'))
+model.add(Dense(16, activation='relu'))
+model.add(Dense(16, activation='relu'))
+model.add(Dense(16, activation='linear'))
 model.add(Dense(10, activation='softmax'))
 
 #3. 컴파일, 훈련
@@ -65,9 +65,9 @@ es = EarlyStopping(monitor='val_loss',
 #                       save_best_only=True, 
 #                       filepath= filepath +'k34_2_'+ '_' + date + '_' + filename)               
 #                     #   filepath= path +'MCP/keras30_ModelCheckPoint13.hdf5') #파일 저장 경로 지정
-model.fit(x_train, y_train, epochs= 200, verbose=1, batch_size=100, validation_split=0.2,
+model.fit(x_train, y_train, epochs= 2, verbose=1, batch_size=100, validation_split=0.2,
           callbacks=[es])
-
+#
 #4. 평가, 예측
 results = model.evaluate(x_test, y_test)
 print('loss : ', results[0])
