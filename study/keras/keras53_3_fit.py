@@ -96,6 +96,10 @@ print ('val_loss :', val_loss[-1])
 print ('acc :',acc[-1])
 print ('val_acc :', val_acc[-1])
 
-
+#
+# loss : 1.0475424971900793e-07
+# val_loss : 4.4136857986450195
+# acc : 1.0
+# val_acc : 0.5916666388511658
 
 
