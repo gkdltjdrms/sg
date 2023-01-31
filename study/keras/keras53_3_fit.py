@@ -47,7 +47,7 @@ xy_test = train_datagen.flow_from_directory(
      # Found 120 images belonging to 2 classes.
 )
 # batch_size = 1000 인 경우
-print(xy_train[0][0].shape, xy_train[0][1].shape)#(160, 100, 100, 1) (160,)
+print(xy_train[0][0].shape, xy_train[0][1].shape)#(160, 100, 100, 1) (160,) 앞에 0은 batch에 첫번째
 print(xy_test[0][0].shape, xy_test[0][1].shape) #(120, 100, 100, 1) (120,)
 # batch_size = 10 인 경우
 print(xy_train[0][0].shape, xy_train[0][1].shape)# (10, 100, 100, 1) (10,)
