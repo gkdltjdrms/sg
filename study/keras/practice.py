@@ -53,7 +53,7 @@ model.summary()
 #2-5 모델
 
 dense51 = Dense(21, activation='relu', name='ds51')(last_output)
-dense52 = Dense(22, activation='relu', name='ds52')(dense51)
+dense52 = Dense(23, activation='relu', name='ds52')(dense51)
 output5 = Dense(1, activation='relu', name='ds53')(dense52)
 
 #2-6 모델 분기
