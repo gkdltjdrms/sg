@@ -30,7 +30,7 @@ test_datagen = ImageDataGenerator(
 xy_train = train_datagen.flow_from_directory(
     './_data/brain/train', 
     target_size=(100, 100),
-    batch_size=1000,
+    batch_size=10,               # batchsize를 큰수치를 넣어서 길이를 확인할수 있다
     class_mode='binary',
     color_mode='grayscale',
     shuffle=True,
@@ -40,7 +40,7 @@ xy_train = train_datagen.flow_from_directory(
 xy_test = train_datagen.flow_from_directory(
     './_data/brain/test', 
     target_size=(100, 100),
-    batch_size=1000,
+    batch_size=10,
     class_mode='binary',
     color_mode='grayscale',
     shuffle=True,
@@ -59,23 +59,29 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense,Conv2D,Flatten
 
 model = Sequential()
-model.add(Conv2D(64, (2,2), input_shape = (100, 100, 1)))
+model.add(Conv2D(128, (2,2), input_shape = (100, 100, 1)))
 model.add(Conv2D(64,(3,3), activation='relu'))
 model.add(Conv2D(64,(3,3), activation='relu'))
 model.add(Flatten())
-model.add(Dense(32, activation='relu'))
+model.add(Dense(64, activation='relu'))
+model.add(Dense(128, activation='relu'))
 model.add(Dense(64, activation='relu'))
 model.add(Dense(32, activation='relu'))
-model.add(Dense(1, activation='sigmoid'))
+model.add(Dense(16, activation='relu'))
+# model.add(Dense(1, activation='sigmoid'))
+model.add(Dense(2, activation='softmax'))
 model.summary()
 
 #3 컴파일 훈련
 
-model.compile(loss='binary_crossentropy', optimizer='adam',
-              metrics=['acc'])
+# model.compile(loss='binary_crossentropy', optimizer='adam',
+#               metrics=['acc'])
+
+model.compile(loss='sparse_categorical_crossentropy', optimizer='adam',
+              metrics=['acc'])  # softmax , 원핫인코딩을 sparse로 
 
 # hist = model.fit_generator(xy_train,
-#                     steps_per_epoch=10, #generator에서만 사용가능
+#                     steps_per_epoch=10, #generator에서만 사용가능 
 #                     epochs=300,
 #                     validation_data=xy_test,
 #                     validation_steps=4,) #generator에서만 사용가능
