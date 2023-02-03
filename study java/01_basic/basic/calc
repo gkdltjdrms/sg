@@ -1,0 +1,29 @@
+package basic;
+
+public class calc {
+
+	public static void main(String[] args) {
+		int a = 320, b = 258;
+		int sum=a+b;
+		int sub=a-b;
+		int mul=a*b;
+		double div=(double)a/b;
+	    System.out.println(a +"+"+ b +"="+ (sum));
+	    System.out.println(a +"-"+ b +"="+(sub));
+	    System.out.println(a +"*"+ b +"="+(mul));
+	    System.out.println(a +"/"+ b +"="+String.format("%.2f",div));
+//	    System.out.println("%d+%d",a,b);
+	}
+}
+
+//1줄 주석
+/*
+[문제] 320(a), 258(b)을 변수에 저장하여 합(sum), 차(sub, 곱(mul), 몫(div)을 구하시오
+단, 소수이하 2째자리까지 출력하시오
+
+[실행결과]
+320 + 258 = xxx
+350 - 258 = xxx
+350 * 258 = xxx
+320 / 258 = x.xx
+*/
