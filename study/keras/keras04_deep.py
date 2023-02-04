@@ -25,4 +25,4 @@ result = model.predict([6])
 print('6의 결과: ', result)
 
 
-##
+####
