@@ -4,23 +4,23 @@ public class MultiFor04 {
 
 	public static void main(String[] args) {
 
-		int j, i, k;
+		int dan, i;   // dan, i 변수 선언
 
-		System.out.println();
-		for(i=2; i<10; i+=3){
+		for(int w=2; w<=8; w+=3){  // w 변수는 2부터 8까지 3씩 증가
 			
-			for(j=1; j<=9; j++){
+			for(i=1; i<=9; i++){  // i 변수는 1부터 9까지 1씩 증가
 
-				for(k=i; k<i+3; k++) {
-					if(k==10)break;          // 단이 10일때 빠져나온다
-					System.out.print(k+"*"+j+"="+(j*k)+"\t");
-				}
-				System.out.println();
+				for(dan=w; dan<=w+2; dan++) {  // dan 변수는 w부터 w+2까지 1씩 증가
+					
+					if(dan != 10)  // dan이 10이 아니면
+						System.out.print(dan+"*"+i+"="+(dan*i)+"\t");  // 곱셈 결과 출력
+				}//for dan end
+				System.out.println();  // 한 줄 띄움
 
-			}
+			}//for i end
 
-			System.out.println();
-		}
+			System.out.println();  // 한 줄 띄움
+		}//for w end 
 	}
 }
 /*

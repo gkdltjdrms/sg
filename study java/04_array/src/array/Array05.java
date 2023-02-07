@@ -6,18 +6,21 @@ public class Array05 {
 		char[] ar = new char[50];  // 50개의 문자를 저장할 배열 생성
 		int[] count = new int[26];  // 26개의 알파벳의 개수를 저장할 배열 생성
 		int eng;
-		for(int i=0; i<50; i++) {  // 50번 반복
-		    eng = (int)(Math.random()*26)+65; // 65에서 90사이의 난수 생성
+		for(int i=0; i<ar.length; i++) {  // 50번 반복
+			eng = (int)(Math.random()*26)+65; // 65에서 90사이의 난수 생성(y-x+1) * x
 		    ar[i] = (char)eng; // 랜덤한 문자 저장
-		    count[eng-'A']++; // 해당 알파벳의 개수 증가
+		    count[eng-'A']++; // 해당 알파벳의 개수 증가 아스키코드를 빼거나 'A'를 빼준다.
 		    System.out.print(ar[i]+" "); // 배열에 저장된 문자 출력
-		    if (i % 10 == 9) {  // 10개씩 출력하기 위한 조건
+		    if ((i+1) % 10 == 0) {  // 10개씩 출력하기 위한 조건
 		        System.out.println(); //10개 출력 후 줄바꿈
 		    }
 		}
 		System.out.println();  // 알파벳 개수 출력 전 줄바꿈
 		for (int i=0; i<count.length; i++) { // 26개의 알파벳 개수 출력 count.length 로 대신할수 있음
-		    System.out.println((char)(i+'A') + " : " + count[i]);// 알파벳 개수 출력
+		    System.out.print((char)(i+'A') + " : " + count[i]+"개"+" ");// 알파벳 개수 출력
+		    if ((i+1) % 4 == 0) {  // 10개씩 출력하기 위한 조건
+		        System.out.println(); //10개 출력 후 줄바꿈
+		    }
 		}
 	}
 }
