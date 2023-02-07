@@ -9,15 +9,15 @@ public class Array05 {
 		for(int i=0; i<50; i++) {  // 50번 반복
 		    eng = (int)(Math.random()*26)+65; // 65에서 90사이의 난수 생성
 		    ar[i] = (char)eng; // 랜덤한 문자 저장
-		    count[eng-65]++; // 해당 알파벳의 개수 증가
+		    count[eng-'A']++; // 해당 알파벳의 개수 증가
 		    System.out.print(ar[i]+" "); // 배열에 저장된 문자 출력
 		    if (i % 10 == 9) {  // 10개씩 출력하기 위한 조건
 		        System.out.println(); //10개 출력 후 줄바꿈
 		    }
 		}
 		System.out.println();  // 알파벳 개수 출력 전 줄바꿈
-		for (int i=0; i<26; i++) { // 26개의 알파벳 개수 출력
-		    System.out.println((char)(i+65) + " : " + count[i]);// 알파벳 개수 출력
+		for (int i=0; i<count.length; i++) { // 26개의 알파벳 개수 출력 count.length 로 대신할수 있음
+		    System.out.println((char)(i+'A') + " : " + count[i]);// 알파벳 개수 출력
 		}
 	}
 }

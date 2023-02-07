@@ -3,12 +3,26 @@ package multi_;
 public class MultiFor04 {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 
+		int j, i, k;
+
+		System.out.println();
+		for(i=2; i<10; i+=3){
+			
+			for(j=1; j<=9; j++){
+
+				for(k=i; k<i+3; k++) {
+					if(k==10)break;          // 단이 10일때 빠져나온다
+					System.out.print(k+"*"+j+"="+(j*k)+"\t");
+				}
+				System.out.println();
+
+			}
+
+			System.out.println();
+		}
 	}
-
 }
-
 /*
 [문제] 2 ~ 9 단까지 3개씩 끊어서 출력하시오
 3중 for문 사용하세요 (3중 for, if)
