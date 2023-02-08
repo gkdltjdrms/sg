@@ -5,40 +5,74 @@ import java.util.Scanner;
 public class BaseBall {
 
 	public static void main(String[] args) {
-		
-		int strike=0,ball=0;
-		Scanner scan = new Scanner(System.in);
-		for (int i = 0; i < com.length; i++) {
-	            int random = (int)(Math.random() * 9 + 1);
-	            com[i] = random;
+	      int[] com = new int[3];
+	      int[] user = new int[3];
+	      int strike = 0; 
+	      int ball = 0; 
+	      String yn;
+	         Scanner sc = new Scanner(System.in);
+	         do {
+	        	 System.out.print("게임을 실행하시겠습니까(Y/N) : ");
+		         yn = sc.next();
+	         }while(!yn.equals("y") && !yn.equals("Y") && !yn.equals("N") && !yn.endsWith("n"));
+	         
+	         if(yn.equals("Y") || yn.endsWith("y")) {
+	        	 System.out.println("게임을 시작합니다");
+	        	 
+	        	 //컴퓨터가 난수 발생
+	        	 for(int i=0; i<com.length; i++) {
+	        		 com[i] = (int)(Math.random() * 9 + 1);
+	        		 //중복제거
+	     			for(int j=0; j<i; j++) {
+	     				 if(com[i] == com[j]) {i--; break;} //	  				 
+	     			}// for j
+	     		}	// for i	
+	        	System.out.println(com[0]+","+com[1]+","+com[2]);
+	        	
+	        	//사용자 숫자 입력
+	        	 while(true) {
+	        		 System.out.println();
+	        		 System.out.println("숫자 입력 :");
+	        		 String num = sc.next();
+	        		 
+	        		 user[0] = num.charAt(0)-'0';  //num/100;
+	        		 user[1] = num.charAt(1)-'0';  //(num%100)/10;
+	        		 user[2] = num.charAt(2)-48;  //(num%100)%10;
+	        		 System.out.println(user[0]+","+user[1]+","+user[2]);
+	        		 
+	        		 //비교
+	        		 strike = ball = 0;
+	        		 for(int i=0; i<com.length; i++) {
+	        			 for(int j=0; j<user.length; j++) {
+	        				 
+	        				 if(com[1] == user[j]) {
+	        					 if(i == j) strike++;
+	        					 else ball++;
+	        					 
+	        				 }// if 
+	        			 }//for j
+	        		 }//for i
+	        		 
+	        		 System.out.println(strike + " 스트라이크\t" + ball + "볼");
+	        		 
+	        		 if(strike == 3) {
+	        			 System.out.println("정답!");
+	        			 break;
+	        			 
+	        		 }
+	        	 }//while
+	        	 
+	         }else
+	        	 System.out.println("프로그램을 종료합니다");
+	        	 //if end
+	         
+	         
+	         
+	        
+	   }
 
-	            
-	            for (int j = 0; j < i; j++) {  
-	                if (com[j] == com[i]) {
-	                    i--;
-	                    break;
-	                    
-	                }//for if end
-	            } // for j end
-	        }//for i end
-		 System.out.print("게임을 실행하시겠습니까(Y/N) : ");
-	        String answer = scan.nextLine();
-		 	if(answer.equals("Y") || answer.equals("y")) {        
-		 		System.out.println("게임을 시작합니다");
-		 		
-		 		
-		 	}else if(answer.equals("n") || answer.equals("N")) {
-		 		System.out.println("프로그램을 종료합니다");
-		 	}
-		
-	        
-	        
-//		 for (int data : com) {
-//				System.out.print(String.format("%5d", data));			
-//			}//for end	
-		
-			}	
-	}
+}
+
 
 
 
