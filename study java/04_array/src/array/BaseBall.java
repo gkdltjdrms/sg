@@ -5,25 +5,28 @@ import java.util.Scanner;
 public class BaseBall {
 
 	public static void main(String[] args) {
-		int[] com = new int[3];
-		int[] user = new int[3];
+		
+		int strike=0,ball=0;
 		Scanner scan = new Scanner(System.in);
 		for (int i = 0; i < com.length; i++) {
 	            int random = (int)(Math.random() * 9 + 1);
 	            com[i] = random;
 
 	            
-	            for (int j = 0; j < i; j++) {
+	            for (int j = 0; j < i; j++) {  
 	                if (com[j] == com[i]) {
 	                    i--;
 	                    break;
+	                    
 	                }//for if end
 	            } // for j end
 	        }//for i end
 		 System.out.print("게임을 실행하시겠습니까(Y/N) : ");
 	        String answer = scan.nextLine();
-		 	if(answer.equals("Y") || answer.equals("y")) {
+		 	if(answer.equals("Y") || answer.equals("y")) {        
 		 		System.out.println("게임을 시작합니다");
+		 		
+		 		
 		 	}else if(answer.equals("n") || answer.equals("N")) {
 		 		System.out.println("프로그램을 종료합니다");
 		 	}
@@ -58,7 +61,8 @@ public class BaseBall {
 숫자입력 : 567
 0스트라이크 2볼
 
-숫자입력 : 758
+숫자입력 : 758  int[] com = new int[3];
+		int[] user = new int[3];
 1스트라이크 2볼
 ...
 
