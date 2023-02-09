@@ -6,55 +6,61 @@ import java.text.DecimalFormat;
 public class MultiArray05 {
 
 	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
-        DecimalFormat df = new DecimalFormat("#.00");
-        
-        System.out.print("인원수 : ");
-        int cnt = sc.nextInt();
-        
-        String[][] names = new String[cnt][2];
-        int[][][] subjects = new int[cnt][][];
-        
-        for (int i = 0; i < cnt; i++) {
-            System.out.print("이름입력 : ");
-            names[i][0] = sc.next();
-            System.out.print("과목수 입력 : ");
-            int subjectCnt = sc.nextInt();
-            subjects[i] = new int[subjectCnt][2];
-            int total = 0;
-            
-            for (int j = 0; j < subjectCnt; j++) {
-       
-                System.out.print("과목명 입력 : ");
-                String subject = sc.next();
-                for (int k = 0; k < subjectCnt; k++) {
-                    if (j == k) {
-                        System.out.print(subject + " 점수 입력 : ");
-                        int jumsu = sc.nextInt();
-                        total += jumsu;
-                        subjects[i][j][0] = jumsu;
-                        subjects[i][j][1] = j;
-                    }
-                }
-            }
-
-
-
-
-            
-            names[i][1] = df.format(total / (double) subjectCnt);
-            System.out.println("---------------------");
-        }
-        
-        System.out.println("이름\t국어\t영어\t총점\t평균");
-        for (int i = 0; i < cnt; i++) {
-            System.out.print(names[i][0] + "\t");
-            for (int j = 0; j < subjects[i].length; j++) {
-                System.out.print(subjects[i][j][0] + "\t");
-            }
-            System.out.println(names[i][1]);
-        }
-    }
+		Scanner scan = new Scanner(System.in);
+		String[][] subject;
+		String[] name;
+		int[][] jumsu;
+		int[] subjectCnt;
+		//기본 배열 지정
+		System.out.println("인원 수 : ");
+		int cnt = scan.nextInt();
+		//초기값
+		name = new String[cnt];
+		subjectCnt = new int[cnt];
+		double[] avg = new double[cnt];
+		subject = new String[cnt][];
+		jumsu = new int[cnt][];
+		
+		System.out.println();
+		//정보 입력
+		for(int i = 0; i<cnt; i++) {
+		System.out.println("이름 입력 : ");
+		name[i] = scan.next();
+		
+		System.out.println("과목 수 입력 : ");
+		subjectCnt[i] = scan.nextInt();
+		subject[i] = new String[subjectCnt[i]]; //멀티배열을 지정하기 위해 사용
+		jumsu[i] = new int[subjectCnt[i] + 1];	//멀티배열을 지정하기 위해 사용
+		
+		for(int j = 0; j<subjectCnt[i]; j++) {
+		System.out.println("과목 명 입력 : ");
+		subject[i][j] = scan.next();
+			}//for i 
+		
+		
+		for(int j = 0; j<subject[i][j].length(); j++) {
+			System.out.println(subject[i][j]+"점수  입력 : ");
+			jumsu[i][j] = scan.nextInt();
+			jumsu[i][subjectCnt[i]] += jumsu[i][j];	//총점  //여기가 너무 헷갈림
+		}//for j 
+		//평균 계산
+		avg[i] = jumsu[i][subjectCnt[i]]/subjectCnt[i];
+	
+		}//for i 1
+		for(int i=0; i<cnt; i++) {
+			for(int j=0; j<subjectCnt[i]; j++) {
+				
+				
+				
+			}//for j
+			
+			
+		}//for i
+		
+		
+		
+		
+	}//
 }
 /*
 [문제]
@@ -81,9 +87,9 @@ public class MultiArray05 {
 과학 점수 입력 : 90
 ---------------------
 
-이름     국어     영어   총점     평균
-홍길동    95     100   xxx     xx.xx
+이름     국어     영어   총점     			평균
+홍길동    95     100   xxx     		xx.xx
 
-이름      국어  영어   과학    총점      평균
-이기자   95   100   90    xxx      xx.xx
+이름     국어    영어    과학    총점      평균
+이기자   95   100   90    xxx      		xx.xx
 */
