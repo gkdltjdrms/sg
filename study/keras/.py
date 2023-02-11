@@ -8,7 +8,7 @@ from sklearn.preprocessing import MinMaxScaler, StandardScaler
 # from tensorflow.keras.utils import to_categorical 
 # or tensorflow as tf 변환하여 one_shot 으로 변환
 
-
+##
 #1. 데이터
 datasets = load_iris()
 # datasets = load_iris()
