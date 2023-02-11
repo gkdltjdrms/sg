@@ -54,3 +54,4 @@ print('loss :', loss)
 
 result = model.predict([[9,30,210]])
 print('예측값 :', result)
+###
