@@ -21,3 +21,4 @@ model.fit(x, y, epochs=200)
 #4. 평가, 예측
 results= model.predict([6])
 print('6의 예측값 : ', results)
+##
