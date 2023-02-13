@@ -6,36 +6,49 @@ public class StringMain2 {
 
 	 public static void main(String[] args) {
 	        Scanner scan = new Scanner(System.in);
-	        while (true) {
+	      
 	            System.out.print("문자열 입력: ");
 	            String original = scan.next();
 
 	            System.out.print("현재 문자열 입력: ");
 	            String current = scan.next();
-	            current = current.toLowerCase();
+	          
 
 	            System.out.print("바꿀 문자열 입력 : ");
 	            String after = scan.next();
 
-	            original = original.toLowerCase();
-	            int index = original.indexOf(current);
-	            if (index == -1) {
-	                System.out.println("입력한 문자열의 크기가 작습니다");
-	                System.out.println("치환 할 수 없습니다");
-	            } else {
-	                int count = 0;
-	                while (index != -1) {
-	                    original = original.substring(0, index) + after + original.substring(index + current.length());
-	                    count++;
-	                    index = original.indexOf(current);
-	                }
-	                System.out.println(original);
-	                System.out.println(count + "번 치환");
-	            }
-	        }
-	    }
-	}
-
+	          if(original.length() < current.length()) {
+	        	  System.out.println("입력한 문자열의 크기가 작습니다");
+	        	  System.out.println("치환 할 수 없습니다");
+//	        	  return; // 함수를 벗어나라
+	        	  System.exit(0); // 프로그램 강제 종료
+	          }//if end
+	          //original.indexof("aa") <첫번째 aa만 찾는다
+	          //original.indexof("aa, 위치") < 그 위치 부터 찾는다 위치가 0일때 0번 부터 찾는다.
+	          original = original.toLowerCase(); //갖고 있는것을 소문자로 변경한다.
+	          current = current.toLowerCase(); 
+	          
+	          int index = 0;
+	          int count = 0;
+	          while(( index = original.indexOf(current, index)) != -1) {
+	        	  
+	        	  count++;
+	        	  
+	        	  index= index+current.length();
+	        	  
+//		          index = original.indexOf("aa", 0);
+//		          index = original.indexOf("aa", index + "aa".length());
+//		          index = original.indexOf("aa", index + "aa".length());
+	        	  
+	          }//while 
+	          
+	          System.out.println(original.replace(current,after));
+	          System.out.println(count+"번 치환");
+	          
+	          
+	          
+	 }//
+}
 
 /*
 치환하는 프로그램을 작성하시오 - indexOf(?, ?), replace()

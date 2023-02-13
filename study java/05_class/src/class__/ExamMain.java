@@ -3,16 +3,31 @@ package class__;
 import java.util.Scanner;
 
 public class ExamMain {
-
+	
 	public static void main(String[] args) {
-		Scanner scan = new Scanner(System.in);
-		
-		for(int i=0; i<5; i++) {
+		Scanner sc = new Scanner(System.in);
 		System.out.println("인원수 입력 : ");
-		int cnt = scan.nextInt();
-		}//for
+		int cnt = sc.nextInt();
+		
 		//객체 배열
-
+		Exam[] ar = new Exam[cnt];
+		
+		for(int k=0; k<cnt; k++) {
+			ar[k] = new Exam();
+			ar[k].compare();
+			System.out.println();
+		}//for k
+		
+		//출력
+		System.out.println("이름\t 1 2 3 4 5 \t점수 ");
+		for(Exam e : ar ) {
+			
+			System.out.print(e.getName()+"\t");
+			for(int i=0; i<e.getOx().length; i++) {
+				System.out.print(e.getOx()[i]+" ");
+				}//for i
+			System.out.println("\t"+ e.getScore());
+		}
 	}
 
 }

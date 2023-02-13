@@ -3,6 +3,7 @@ package inheritance;
 import java.util.Scanner;
 
 public class ExamMain {
+	
 
 		    public static void main(String[] args) {
 		        Scanner sc = new Scanner(System.in);
@@ -12,6 +13,7 @@ public class ExamMain {
 		        Exam[] exams = new Exam[num];
 
 		        for(int i=0; i<num; i++) {
+		        	
 		            System.out.print("이름 입력 : ");
 		            String name = sc.next();
 		            System.out.print("답 입력 : ");

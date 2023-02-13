@@ -1,45 +1,52 @@
 package inheritance;
 
 import java.util.Scanner;
-class Exam {
-    private String name = null;
-    private String dap = null;
-    private char[] ox = null;
-    private int score = 0;
-    private final String JUNG = "11111"; //상수화
 
+public class Exam {
+	private String name;
+	private String dap;
+	private char[] ox;
+	private int score;
+	private final String JUNG = "11111";
+	
+		
+    // 생성자 정의
     public Exam(String name, String dap) {
-        this.name = name;
-        this.dap = dap;
-        ox = new char[5];
-        compare();
-    }
+    	 this.name = name; // 이름 설정
+    	    this.dap = dap; // 정답 설정
+    	    ox = new char[JUNG.length()]; // OX 결과 배열 생성
+    	    compare(); // 비교 메소드 호출
+    	}
 
-    public void compare() {
-        for(int i=0; i<5; i++) {
-            if(dap.charAt(i) == JUNG.charAt(i)) {
-                ox[i] = 'O';
-                score += 20;
-            } else {
-                ox[i] = 'X';
-            }
-        }
-    }
+    	// 비교 메소드 정의
+    	public void compare() {
+    	    // 반복문을 사용하여 5개 문제의 정답 비교
+    	    for(int i=0; i<JUNG.length(); i++) {
+    	        // 정답과 입력한 답이 일치하면
+    	        if(dap.charAt(i) == JUNG.charAt(i)) {
+    	            ox[i] = 'O'; // O 기록
+    	            score += 20; // 점수 20 추가
+    	        } else {
+    	            ox[i] = 'X'; // X 기록
+    	        }
+    	    }
+    	}
 
-    public String getName() {
-        return name;
-    }
+    	// 이름 반환 메소드 정의
+    	public String getName() {
+    	    return name;
+    	}
 
-    public char[] getOx() {
-        return ox;
-    }
+    	// OX 결과 반환 메소드 정의
+    	public char[] getOx() {
+    	    return ox;
+    	}
 
-    public int getScore() {
-        return score;
-    }
+    	// 점수 반환 메소드 정의
+    	public int getScore() {
+    	    return score;
+    	}
 }
-
-
 
 
 /*
