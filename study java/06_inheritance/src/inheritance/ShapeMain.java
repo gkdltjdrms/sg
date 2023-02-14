@@ -7,91 +7,128 @@ class Shape{
 	protected Scanner scan = new Scanner(System.in);
 	
 	public Shape() {
-		System.out.println("Shape 기본 생성자");
+		System.out.println("Shape 기본생성자");
 	}
 	
 	public void calcArea() {
 		System.out.println("도형을 계산합니다");
 	}
-	public void dispArea() {
+	
+	public void disArea() {
 		System.out.println("도형을 출력합니다");
 	}
-	
 }
-//-----------------
+
+//삼각형class
 class Sam extends Shape{
 	protected int base, height;
 	
 	public Sam() {
 		System.out.println("Sam 기본 생성자");
-		System.out.println("밑변 : ");
+		System.out.print("밑변 : ");
 		base = scan.nextInt();
-		System.out.println("높이 : ");
+		System.out.print("높이 : ");
 		height = scan.nextInt();
 	}
+	//어노테이션(@)
 	@Override
 	public void calcArea() {
-		area = base* height / 2.0;
+		area = base * height / 2.0;
 	}
+	
 	@Override
-	public void dispArea() {
-		System.out.println("삼각형 넓이 = "+ area);
-		
+	public void disArea() {
+		System.out.println("삼각형 넓이 = "+area);
 	}
-	//------------------------
-//	class Sa extends Shape() {
-//		protected int width, height;
-//		System.out.println("Sa 기본 생성자");
-//		System.out.println("가로 : ");
-//		width = scan.nextInt();
-//		System.out.println("세로 : ");
-//		height = scan.nextInt();
-//	}
-//	//--------------------
-//	class Sadari extends Shape() {
-//		System.out.println("윗변 : ");
-//		base = scan.nextInt();
-//		System.out.println("밑변 : ");
-//		height = scan.nextInt();
-//		System.out.println("높이 : ");
-//		height = scan.nextInt();
-//		
-//	}
-	
-	
 }
-//----------------
+
+
+//사각형 class
+class Sa extends Shape{
+	protected int base, height;
+	
+	public Sa() {
+		System.out.println("Sa 기본 생성자");
+		System.out.print("가로 : ");
+		base = scan.nextInt();
+		System.out.print("세로 : ");
+		height = scan.nextInt();
+	}
+	//어노테이션(@)
+	@Override
+	public void calcArea() {
+		area = base * height; 
+	}
+	
+	@Override
+	public void disArea() {
+		System.out.println("사각형 넓이 = "+area);
+	}
+}
+
+
+//사다리꼴 class
+class Sadari extends Shape{
+	protected int top, height, bottom;
+	
+	public Sadari() {
+		System.out.println("Sadari 기본 생성자");
+		System.out.print("윗변 : ");
+		top = scan.nextInt();
+		System.out.print("밑변 : ");
+		bottom = scan.nextInt();
+		System.out.print("높이 : ");
+		height = scan.nextInt();
+	}
+	//어노테이션(@)
+	@Override
+	public void calcArea() {
+		area = (top+bottom)*height; 
+	}
+	
+	@Override
+	public void disArea() {
+		System.out.println("사다리꼴 넓이 = "+area);
+	}
+}
+
+
 public class ShapeMain {
 
 	public static void main(String[] args) {
-		Sam sam = new Sam();
-		sam.calcArea();
-		sam.dispArea();
+//		Sam sam = new Sam();
+//		sam.calcArea();
+//		sam.disArea();
+//		System.out.println();
+//		Sa sa = new Sa();
+//		sa.calcArea();
+//		sa.disArea();
+//		System.out.println();
+//		Sadari sadari = new Sadari();
+//		sadari.calcArea();
+//		sadari.disArea();
 		
-
 		
-		
-		
-		
-		
-		
-		
-		//다형성 => 부모 = 자식
-		Shape shape; 
+		//다형성
+		//부모클래스가 모든 자식클래스를 참조할수 있다
+		Shape shape;
 		shape = new Sam();
 		shape.calcArea();
-		shape.dispArea();
+		shape.disArea();
 		System.out.println();
 		
-//		Shape = new Sa(); 
-//		shape.calcArea();
-//		shape.dispArea();
-//		System.out.println();
-//		
-//		Shape = new Sadari(); 
-//		shape.calcArea();
-//		shape.dispArea();
-//		System.out.println();
+		shape = new Sa();
+		shape.calcArea();
+		shape.disArea();
+		System.out.println();
+		
+		shape = new Sadari();
+		shape.calcArea();
+		shape.disArea();
+		System.out.println();
+		
+		
+
 	}
 
 }

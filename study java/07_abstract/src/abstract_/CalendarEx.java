@@ -16,12 +16,12 @@ public class CalendarEx {
 	    private int month;
 	    
 	    // 생성자, 년도와 월을 입력받아 객체를 생성
-	    public CalendarEx(int year, int month) {
-	        this.year = year;
-	        this.month = month;
-	       
-
-	    }
+		public CalendarEx(){
+			System.out.print("년도 입력 : ");
+			this.year = sc.nextInt();
+			System.out.print("월 입력 : ");
+			this.month = sc.nextInt();
+		}
 	    
 	    
 	    // 현재 월의 최대 일수를 구하는 메소드

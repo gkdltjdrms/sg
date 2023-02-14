@@ -10,8 +10,9 @@ abstract class Shape{
 		System.out.println("Shape 기본생성자");
 	}
 	
-	public abstract void calcArea(); //추상 메소드
-	public abstract void disArea();	 //추상 메소드
+	public abstract void calcArea(); //추상메소드
+	public abstract void disArea(); //추상메소드
+}
 	
 
 
@@ -127,5 +128,4 @@ public class ShapeMain {
 
 	}
 
-}
 }
