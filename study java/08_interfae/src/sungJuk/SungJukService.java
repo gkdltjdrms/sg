@@ -31,8 +31,8 @@ public class SungJukService {
 				
 				if(num == 1) sungjuk = new SungJukInsert() ;	
 				else if(num == 2)sungjuk = new SungJukList() ;
-				else if(num == 3);
-				else if(num == 4);
+				else if(num == 3)sungjuk = new SungJukUpdate();
+				else if(num == 4)sungjuk = new SungJukDelete();
 				else if(num == 5);
 				else {
 					System.out.println("1 ~ 6번까지만 입력하세요");
