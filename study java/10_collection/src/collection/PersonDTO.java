@@ -1,6 +1,6 @@
 package collection;
 
-public class PersonDTO {	//1인분
+public class PersonDTO implements Comparable<PersonDTO>{	//1인분
 	private String name;
 	private int age;
 	
@@ -30,6 +30,12 @@ public class PersonDTO {	//1인분
 		public String toString() {
 			return name + "\t" + age;
 		}
-	
+	@Override
+	public int compareTo(PersonDTO dto) {
+		//age로 오름차순
+		if(this.age < dto.age) return -1;
+		else if(this.age > dto.age) return 1;
+		else return 0;
+	}
 	
 }

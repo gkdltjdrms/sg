@@ -1,10 +1,7 @@
 package nested;
 
-public class AbstractExam {
-
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-	}
-
+public abstract class AbstractExam {
+	public void cc() {}//empty body
+	public void dd() {}
+	
 }

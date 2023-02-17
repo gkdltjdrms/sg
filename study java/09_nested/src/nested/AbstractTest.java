@@ -1,14 +1,13 @@
 package nested;
 
-public class AbstractTest {
+public abstract class AbstractTest { //POJO 형식
 
-		private String name;
+		protected String name;
 
 		public String getName() {
 			return name;
 		}
 
-		public void setName(String name) {
-			this.name = name;
-		}
+		public abstract void setName(String name); //추상메소드 
+	
 }
