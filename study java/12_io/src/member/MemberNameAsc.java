@@ -13,14 +13,14 @@ public class MemberNameAsc implements Member {
     
     @Override
     public void execute(ArrayList<MemberDTO> arrayList) {
-        // sort the members list by name in ascending order
+        // 멤버 목록을 이름별로 오름차순으로 정렬
         Collections.sort(arrayList, new Comparator<MemberDTO>() {
             public int compare(MemberDTO member1, MemberDTO member2) {
                 return member1.getName().compareTo(member2.getName());
             }
         });
         
-        // print the sorted list
+        // 정렬된 리스트 출력
         System.out.println("이름순으로 회원 목록을 출력합니다.");
         for (MemberDTO member : arrayList) {
             System.out.println("이름: " + member.getName() + ", 나이: " + member.getAge()

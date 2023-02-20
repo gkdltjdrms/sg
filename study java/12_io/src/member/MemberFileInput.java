@@ -26,8 +26,10 @@ public class MemberFileInput implements Member {
 			ois.close();
 			System.out.println("파일에 읽기 완료");
 		} catch (IOException e) {
+			System.out.println("파일을 찾을 수 없습니다");
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
+			System.out.println("파일을 찾을 수 없습니다");
 			e.printStackTrace();
 		}
 
