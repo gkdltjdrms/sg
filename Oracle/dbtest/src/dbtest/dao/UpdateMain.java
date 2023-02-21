@@ -16,9 +16,6 @@ public class UpdateMain {
 	private String url = "jdbc:oracle:thin:@localhost:1521:xe";
 	private String username = "c##java";
 	private String password = "1234";
-	
-	
-	
 
 	public UpdateMain() {
 		Scanner sc = new Scanner(System.in);
@@ -44,7 +41,8 @@ public class UpdateMain {
 			// SQL문을 실행하고 수정된 레코드의 수를 반환한다.
 			int result = pstmt.executeUpdate();
 			// 결과를 출력한다.
-			if(result == 0 )System.out.println("검색된 이름이 없습니다."); //결과가 0 일시 출력
+			if (result == 0)
+				System.out.println("검색된 이름이 없습니다."); // 결과가 0 일시 출력
 			System.out.println("수정된 레코드 수: " + result);
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
