@@ -16,7 +16,7 @@ public class InsertMain {
 
 	public InsertMain() {
 		try {
-			Class.forName("oracle.jdbc.driver.OracleDriver");// Class타입으로 생성
+			Class.forName(driver);// Class타입으로 생성
 			System.out.println("driver loading 성공");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
@@ -25,7 +25,7 @@ public class InsertMain {
 
 	public void getConnection() {
 		try {
-			conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "C##JAVA", "1234");
+			conn = DriverManager.getConnection(ur1, username, password);
 			System.out.println("connection 성공 ");
 		} catch (SQLException e) {
 
