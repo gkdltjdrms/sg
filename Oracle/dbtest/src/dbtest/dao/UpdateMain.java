@@ -9,22 +9,31 @@ import java.util.Scanner;
 
 public class UpdateMain {
 
-	public static void main(String[] args) {
-		// Connection, PreparedStatement, ResultSet 객체를 선언한다.
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
+	private String name;
+	private Connection conn;
+	private PreparedStatement pstmt;
+	private String driver = "oracle.jdbc.driver.OracleDriver";
+	private String url = "jdbc:oracle:thin:@localhost:1521:xe";
+	private String username = "c##java";
+	private String password = "1234";
+	
+	
+	
+
+	public UpdateMain() {
 		Scanner sc = new Scanner(System.in);
 
 		System.out.print("검색할 이름 입력: ");
-		String name = sc.nextLine();
+		name = sc.nextLine();
+	}
 
+	public void insertArticle() {
 		try {
 			// Oracle JDBC 드라이버를 로딩한다.
-			Class.forName("oracle.jdbc.driver.OracleDriver");
+			Class.forName(driver);
 			System.out.println("driver load 성공");
 			// Connection 객체를 생성한다.
-			conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "c##java", "1234");
+			conn = DriverManager.getConnection(url, username, password);
 			System.out.println("connection 성공");
 			// SQL문을 작성한다.
 			String sql = "UPDATE DBTEST SET age = age + 1, height = height + 1 WHERE name LIKE ?";
@@ -52,6 +61,11 @@ public class UpdateMain {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	public static void main(String[] args) {
+		UpdateMain um = new UpdateMain();
+		um.insertArticle();
 	}
 }
 /*
