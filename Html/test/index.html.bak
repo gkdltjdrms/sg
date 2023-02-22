@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+ 
+  <title>Document</title>
+	<style>
+	div {
+		border: 1px solid red;
+		width: 250px;
+		height: 350px;
+		float: left;
+	}
+
+	</style>
+
+
+ </head>
+ <body>
+  새로운 Context 작성
+  <br>
+  <br>
+  <div><img src="Ryan.png"></div>
+  <div><img src="Neo.png"></div>
+  <div><img src="Frodo.png"></div>
+
+ </body>
+</html>

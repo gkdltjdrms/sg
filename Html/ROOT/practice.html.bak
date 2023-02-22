@@ -1,0 +1,38 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My First Webpage</title>
+    <link rel="stylesheet" href="style.css">
+
+	<div onclick="window.open('http://localhost:8080/tomcat.svg')">호랑이</div>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <section>
+        <h1>Welcome to my webpage!</h1>
+        <p>This is my first webpage. It's simple, but I hope you like it!</p>
+        <img src="http://localhost:8080/tomcat.svg" alt="A beautiful picture">
+        <ul>
+          <li>Item 1</li>
+          <li>Item 2</li>
+          <li>Item 3</li>
+        </ul>
+      </section>
+    </main>
+    <footer>
+      <p>&copy; 2023 My First Webpage</p>
+    </footer>
+  </body>
+</html>
