@@ -12,22 +12,14 @@
   </servlet-mapping>  -->
   
   
-   <servlet>
-  	<servlet-name>ParamServlet</servlet-name>
-  	<servlet-class>com.param.ParamServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-  	<servlet-name>ParamServlet</servlet-name>
-  	<url-pattern>/ParamServlet</url-pattern>
-  </servlet-mapping> 
   
-   <servlet>
-  	<servlet-name>CalcServlet</servlet-name>
-  	<servlet-class>com.calc.CalcServlet</servlet-class>
+  <servlet>
+  	<servlet-name>PersonServlet</servlet-name>
+  	<servlet-class>com.person.PersonServlet</servlet-class>
   </servlet>
   <servlet-mapping>
-  	<servlet-name>CalcServlet</servlet-name>
-  	<url-pattern>/CalcServlet</url-pattern>
+  	<servlet-name>PersonServlet</servlet-name>
+  	<url-pattern>/PersonServlet</url-pattern>
   </servlet-mapping> 
   
   

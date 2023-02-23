@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+td {
+	color: black;
+}
+
+h3 {
+	color: black;
+}
+
+#XDiv {
+	font-size: 8pt;
+	color: black;
+	font-weight: bold;
+}
+
+#YDiv {
+	font-size: 8pt;
+	color: black;
+	font-weight: bold;
+}
+</style>
+</head>
+<body>
+	<form name="calcForm" method="get" action="http://localhost:8080/testServlet/CalcServlet">
+		<h3>계산</h3>
+
+		<table border="1" cellpadding="5" cellspacing="0">
+			<tr>
+				<td width="70" align="center">X</td>
+				<td><input type="text" name="X" placeholder="X 의 값을 입력하세요">
+					<div id="XDiv"></div></td>
+			</tr>
+
+			<tr>
+				<td align="center">Y</td>
+				<td><input type="text" name="Y" size="7" maxlength="3">
+					<div id="YDiv"></div></td>
+			</tr>
+
+			<tr>
+				<td colspan="2" align="center">
+					<input type="submit" value="계산">
+					<input type="reset" value="취소">
+					</td>
+			</tr>
+
+		</table>
+	</form>
+
+
+	<script type="text/javascript">
+		/*
+		function check(){
+			if(document.paramForm.name.value == ""){
+				alert("이름을 입력하세요");
+			} else if(document.paramForm.age.value == ""){
+				alert("나이을 입력하세요");
+			}else
+					document.paramForm.submit();
+			}
+		 */
+	
+	</script>
+</body>
+</html>
