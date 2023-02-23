@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+td {
+	color: blue;
+}
+
+h3 {
+	color: violet;
+}
+
+#nameDiv {
+	font-size: 8pt;
+	color: red;
+	font-weight: bold;
+}
+
+#ageDiv {
+	font-size: 8pt;
+	color: red;
+	font-weight: bold;
+}
+</style>
+</head>
+<body>
+	<form name="paramForm" method="post" action="http://www.naver.com">
+		<h3>연령제한</h3>
+
+		<table border="1" cellpadding="5" cellspacing="0">
+			<tr>
+				<td width="70" align="center">이름</td>
+				<td><input type="text" name="name" placeholder="이름을 입력하세요">
+					<div id="nameDiv"></div></td>
+			</tr>
+
+			<tr>
+				<td align="center">나이</td>
+				<td><input type="text" name="age" size="7" maxlength="3">
+					<div id="ageDiv"></div></td>
+			</tr>
+
+			<tr>
+				<td colspan="2" align="center"><input type="button" value="보내기"
+					onclick="javascript:check()"> <input type="reset"
+					value="취소"></td>
+			</tr>
+
+		</table>
+	</form>
+
+
+	<script type="text/javascript">
+		/*
+		function check(){
+			if(document.paramForm.name.value == ""){
+				alert("이름을 입력하세요");
+			} else if(document.paramForm.age.value == ""){
+				alert("나이을 입력하세요");
+			}else
+					document.paramForm.submit();
+			}
+		 */
+		function check() {
+			document.getElementById("nameDiv").innerText = "";
+			document.getElementById("ageDiv").innerText = "";
+
+			if (document.paramForm.name.value == "")
+				document.getElementById("nameDiv").innerText = "이름 입력";
+			else if (document.paramForm.age.value == "")
+				document.getElementById("ageDiv").innerText = "나이 입력";
+			else
+				document.paramForm.submit();
+		}
+	</script>
+</body>
+</html>
