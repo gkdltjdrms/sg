@@ -23,7 +23,7 @@ public class PersonServlet extends HttpServlet {
 	
 	// response
 	response.setContentType("text/html;charset=UTF-8");
-	PrintWriter out = response.getWriter();
+	PrintWriter out = response.getWriter();//브라우저로 나올수있게 해준다.
 	out.println("<html>");
 	out.println("<body>");
 	out.println("<ul>");
