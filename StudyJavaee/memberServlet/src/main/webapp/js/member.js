@@ -2,33 +2,6 @@
  * 
  */
 
-
-
-function select() {
-
-document.writeForm.email2.value = document.writeForm.email3.value;
-
-}
-
-function checkLogin(id, pwd) {
-  // 입력된 사용자 이름과 비밀번호가 모두 존재하는지 확인
-  if (!username || !password) {
-    return false;
-  }
-  
-  // 사용자 이름과 비밀번호가 유효한지 확인
-  // 여기서는 간단하게 사용자 이름이 "user"이고 비밀번호가 "password"인 경우를 유효한 것으로 가정
-  if (username === "user" && password === "password") {
-    return true;
-  } else {
-    return false;
-  }
-}
-
-
-
-
-
 function checkWrite() {
 
 //if(document.writeForm.name.value == "") alert("이름을 입력하세요")
@@ -60,6 +33,44 @@ else
 document.writeForm.submit();
 
 }
+
+
+const form = document.loginform;
+
+function check_login() {
+	document.getElementById("id_check").innerText = ""
+	document.getElementById("pw_check").innerText = ""
+	
+	if (form.login_id.value == "") {
+		document.getElementById("id_check").innerText = "아이디를 입력하세요."
+	}
+	else if (form.login_pw.value == "") {
+		document.getElementById("pw_check").innerText = "비밀번호를 입력하세요."
+	}
+	else {
+		document.loginform.submit();
+	}
+}
+
+
+
+
+
+
+
+function select() {
+
+document.writeForm.email2.value = document.writeForm.email3.value;
+
+}
+
+
+
+
+
+
+
+
 
 /* Daum 우편 번호 */
 

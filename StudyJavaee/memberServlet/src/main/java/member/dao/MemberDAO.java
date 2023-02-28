@@ -3,6 +3,7 @@ package member.dao;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import member.been.MemberDTO;
@@ -22,6 +23,17 @@ private String username = "C##JAVA";
 private String password = "1234";
 
 
+
+private static MemberDAO memberDAO = new MemberDAO();
+
+
+public static MemberDAO getInstance() {
+
+return memberDAO;
+
+}
+
+
 private static void close(Connection conn, PreparedStatement pstmt) {
 
 try {
@@ -38,14 +50,7 @@ e.printStackTrace();
 
 }
 
-private static MemberDAO memberDAO = new MemberDAO();
 
-
-public static MemberDAO getInstance() {
-
-return memberDAO;
-
-}
 
 
 public MemberDAO() { // driver loading
@@ -146,6 +151,38 @@ MemberDAO.close(conn, pstmt);
 
 return su;
 
+
+}
+
+
+
+
+public MemberDTO memberRead(String login_id, String login_pwd) {
+	getConnection();
+	
+	MemberDTO dto = null;
+	PreparedStatement preparedStatement = null;
+	ResultSet resultSet = null;
+
+	try {
+		String sql = "select id, pwd from member where id = ?";
+		preparedStatement = conn.prepareStatement(sql);
+		preparedStatement.setString(1, login_id);
+
+		resultSet = preparedStatement.executeQuery();
+
+		if (resultSet.next()) {
+			dto = new MemberDTO();
+			dto.setId(resultSet.getString("id"));
+			dto.setPwd(resultSet.getString("pwd"));
+		}
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	} finally {
+		MemberDAO.close(conn, preparedStatement);
+	}
+	return dto;
 
 }
 

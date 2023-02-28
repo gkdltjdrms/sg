@@ -93,13 +93,16 @@ out.println("<html>");
 
 out.println("<body>");
 
-if (su == 0)
+if (su == 0) {
 
 out.println("<h3>회원가입 실패</h3>");
+out.println("<input type='button' value='뒤로' onclick='history.go(-1)'>"); 
 
+}
 else
 
 out.println("<h3>회원가입 성공</h3>");
+out.println("<input type='button' value='로그인' onclick=location.href='http://localhost:8080/memberServlet/member/login.html'>"); 
 
 out.println("</body>");
 

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Insert title here</title>
+    <style type="text/css">
+        div {
+            color: red;
+            font-size: 8pt;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <form id="guestbookForm" name="guestbookWriteForm" method="post" action="http://localhost:8080/guestbookServlet/GuestbookReadServlet">
+       
+            <tr>
+                <th>글 번호 입력 :</th> 
+                <td>
+                    <input type="text" name="seq" id="seq" placeholder="번호 입력" size="25">
+                    <input type="submit" value="검색" onclick="document.getElementById('guestbookForm').submit()">
+                    <div id="seqDiv"></div>
+                    
+                </td>
+                
+            </tr>
+        
+    </form>
+</body>
+</html>
