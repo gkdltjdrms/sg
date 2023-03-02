@@ -1,6 +1,13 @@
 /**
  * 
  */
+function list(){
+	
+	 	document.guestbookwriteForm.submit();
+	 
+ }
+
+
 
  
  function checkWirte(){

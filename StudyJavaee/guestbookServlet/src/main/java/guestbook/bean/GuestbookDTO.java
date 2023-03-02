@@ -1,18 +1,18 @@
 package guestbook.bean;
 
 public class GuestbookDTO {
-	private int swq;
+	private int seq;
 	private String name;
 	private String email;
 	private String homepage;
 	private String subject;
 	private String content;
 	private String logtime;
-	public int getSwq() {
-		return swq;
+	public int getSeq() {
+		return seq;
 	}
-	public void setSwq(int swq) {
-		this.swq = swq;
+	public void setSeq(int seq) {
+		this.seq = seq;
 	}
 	public String getName() {
 		return name;

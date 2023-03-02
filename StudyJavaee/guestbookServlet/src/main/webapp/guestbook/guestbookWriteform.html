@@ -8,7 +8,8 @@
 
 <title>Insert title here</title>
 
-<style type="text/css">
+
+<style type="text/css"  >
 
 div {
 
@@ -17,6 +18,7 @@ color: red;
 font-size: 8pt;
 
 font-weight: bold;
+
 
 }
 
@@ -82,7 +84,7 @@ placeholder="제목 입력" size="60">
 
 <th>내용</th>
 
-<td><textarea name="content" id="content" cols="50" rows="20"></textarea>
+<td><textarea  name="content" id="content" cols="50" rows="20"></textarea>
 
 <div id="contentDiv"></div></td>
 
@@ -92,9 +94,15 @@ placeholder="제목 입력" size="60">
 
 <td colspan="2" align="center"><input type="button" value="글작성"
 
-onclick="checkWrite()"> <input type="reset" value="다시작성">
+onclick="checkWrite()">
 
-<input type="button" value="글목록" onclick="list()"></td>
+ <input type="reset" value="다시작성">
+ 
+ <input type="button" value="글검색"
+
+onclick="location.href='guestbookSearch.html'">
+
+<input type="button" value="글목록" onclick="location.href='/guestbookServlet/GuestbookListServlet?pg=1'"></td>
 
 </tr>
 
