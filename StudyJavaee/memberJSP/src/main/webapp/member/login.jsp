@@ -10,7 +10,7 @@ pageEncoding="UTF-8"%>
 <title>Login</title>
 </head>
 <body>
-	<%
+	<%	
 		// 데이터
 		String login_id = request.getParameter("login_id");
 		String login_pw = request.getParameter("login_pw");
@@ -18,21 +18,49 @@ pageEncoding="UTF-8"%>
 	// DB
 		MemberDAO memberDAO = MemberDAO.getInstance();
 		String name = memberDAO.memberLogin(login_id, login_pw);
+		
+		
+		//쿠키
+				
+				
+	
+		
 	if (name == null ) {
-%>
-		<h3>로그인 실패</h3>
-		<p>아이디 혹은 비밀번호가 맞지 않습니다</p>
-		<button onclick="history.back()">뒤로</button>
-<%
+		//페이지 이동
+		response.sendRedirect("loginFail.jsp");
+
 	} else {
-%>
-		<h3>로그인 성공</h3>
-		<p><%=name%>님이 로그인 하였습니다</p>
-		<input type="button" value="회원정보 수정" onclick="location.href='http://localhost:8080/memberJSP/member/updateForm.jsp?login_id=<%=login_id%>';">
+		//쿠키
+		/*
+		Cookie cookie = new Cookie("memName", name);
+		cookie.setMaxAge(30 * 60); //초 단위  -30분
+		response.addCookie(cookie);//클라이언트 보내기
+		
+		Cookie cookie2 = new Cookie("memId", login_id);
+		cookie2.setMaxAge(30 * 60); //초 단위
+		response.addCookie(cookie2);//클라이언트 보내기
+		*/
+		//세션
+		//HttpSession session = request.getSession(); - jsp는 세션이 내장객체에 이미 들어가 있다
+		
+		session.setMaxInactiveInterval(30*60);
+		session.setAttribute("memName", name);
+		session.setAttribute("memId", login_id);
+		System.out.println("이름 = " + session.getAttribute("memName"));
 		
 		
-<%
+		//페이지 이동
+		response.sendRedirect("loginOk.jsp");
+
 	}
 %>
 </body>
 </html>
+
+
+
+
+
+
+
+

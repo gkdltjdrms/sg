@@ -37,7 +37,7 @@ memberDTO.setAddr2(addr2);
 
 // DB
 MemberDAO memberDAO = MemberDAO.getInstance(); // 클래스 생성
-int su = memberDAO.memberWrite(memberDTO); // 호출
+int su = (int) memberDAO.memberUpdate(memberDTO);
 
 %>
 
@@ -48,12 +48,16 @@ int su = memberDAO.memberWrite(memberDTO); // 호출
 <title>회원가입 결과</title>
 </head>
 <body>
-    <% if (su == 0) { %>
-        <h3>업데이트 실패</h3>
-        <input type='button' value='뒤로' onclick='history.go(-1)'>
-    <% } else { %>
-        <h3>업데이트 성공</h3>
-        <input type='button' value='로그인' onclick=location.href='loginForm.jsp'>
-    <% } %>
+   
+        <h3>회원정보수정 완료!!</h3>
+        
+        <script type="text/javascript">
+        window.onload=function(){
+        	alert("회원정보수정 완료");
+        	location.href = "loginForm.jsp"
+        }
+        
+        </script>
+   
 </body>
 </html>
