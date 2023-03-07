@@ -1,43 +1,69 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
-<%@ page import="member.been.MemberDTO" %>
 <%@ page import="member.dao.MemberDAO" %>
+
+<%
+	//데이터
+	String pwd = request.getParameter("pwd"); //넘어온 데이터
+	System.out.println("pwd = " + pwd); // 맨처음에는 pwd가 null
+	
+	//세션
+	String id = (String)session.getAttribute("memId");
+
+	//DB
+	boolean exist = false;
+	if(pwd != null){
+		MemberDAO memberDAO = MemberDAO.getInstance();
+		exist = memberDAO.isExistPwd(id, pwd); //비밀번호가 있으면 true, 없으면 false
+	}
+	
+	if(exist) response.sendRedirect("delete.jsp");
+%>
 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
+<style type="text/css">
+div#pwdDiv {
+	color: red;
+	font-weight: bold;
+}
+</style>
 </head>
 <body>
-
-<div style="text-align: center">
-    <form action="" method="post">
-        <label for="depwd">비밀번호 입력</label>
-        <input type="password" name="depwd" id="depwd" size="20"> 
-        <input type="button" value="검색" onclick="checkpwd()">
-        <div id="depwdDiv"></div>
-    </form>
-</div>
-
-<%
-    // 데이터
-    String login_id = (String)session.getAttribute("memId");
-
-    // DB
-    MemberDAO memberDAO = MemberDAO.getInstance();
-    MemberDTO memberDTO = memberDAO.getMember(login_id);
-%>
+<form name="deleteForm" method="post" action="deleteForm.jsp">
+	<div style="text-align: center;">
+		비밀번호 입력 : <input type="password" name="pwd" id="pwd">
+		<input type="button" value="검색" onclick="checkDelete()">
+		<br><br>
+		<div id="pwdDiv">
+			<%if(pwd != null && !exist ){ %>
+				비밀번호가 맞지 않습니다.
+			<%} %>
+		</div>
+	</div>
+</form>
 
 <script type="text/javascript">
-    function checkpwd() {
-        if (memberDTO.getPwd() != depwd) {
-            document.getElementById("depwdDiv").innerText = "비밀번호가 맞지 않습니다";
-        }
-    }
+function checkDelete(){
+	document.getElementById("pwdDiv").innerText = "";
+	
+	if(document.getElementById("pwd").value == "") 
+		document.getElementById("pwdDiv").innerText = "먼저 비밀번호를 입력하시오";
+	else
+		document.deleteForm.submit();
+}
 </script>
-
 </body>
 </html>
+
+
+
+
+
+
+
+
+

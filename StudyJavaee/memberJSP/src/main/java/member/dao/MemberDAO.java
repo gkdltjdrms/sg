@@ -193,6 +193,50 @@ public class MemberDAO {
 		return memberDTO;
 	}
 	
+	public boolean isExistPwd(String id, String pwd) {
+		boolean exist = false;
+		String sql = "select * from member where id=? and pwd=?";
+		
+		getConnection();
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			pstmt.setString(2, pwd);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) exist = true;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			MemberDAO.close(conn, pstmt, rs);
+		}
+		
+		return exist;
+		
+	}
+	
+	public void memberDelete(String id) {
+		String sql = "delete member where id=?";
+		
+		getConnection();
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			
+			pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		} finally {
+			MemberDAO.close(conn, pstmt, rs);
+		}
+		
+	}
+	
 	
 	
 	

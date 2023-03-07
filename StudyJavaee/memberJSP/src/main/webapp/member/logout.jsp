@@ -40,5 +40,6 @@
 </head>
 <body>
 <h3> 로그아웃</h3>
+<button onclick="history.back()">뒤로</button>
 </body>
 </html>

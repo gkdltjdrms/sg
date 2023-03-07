@@ -43,7 +43,7 @@
 		<input type="button" value="회원정보 수정" onclick="location.href='updateForm.jsp'">
 		<input type="button" value="로그아웃" onclick="location.href='logout.jsp'">
 		<input type="button" value="회원탈퇴" onclick="location.href='deleteForm.jsp'">
-
+		<input type="button" value="로그인" onclick="location.href='http://localhost:8080/memberJSP/member/loginForm.jsp';">
 
 
 </body>
