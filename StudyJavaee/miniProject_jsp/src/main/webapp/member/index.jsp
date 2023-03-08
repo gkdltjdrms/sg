@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>My Website</title>
+<title>메인화면</title>
 <style>
     body {
         font-family: Arial, sans-serif;
@@ -45,16 +45,21 @@
 </head>
 <body>
 <header>
-    <h1>My Website</h1>
+    <h1>*** 메인화면 ***</h1>
 </header>
 <nav>
+	<% if(session.getAttribute("memId") == null) {%>
     <a href="WriteForm.jsp">회원가입</a>
     <a href="loginForm.jsp">로그인</a>
+    
+    <%}else{%> 	
     <a href="logout.jsp">로그아웃</a>
     <a href="updateForm.jsp">회원정보수정</a>
     <a href="deleteForm.jsp">회원탈퇴</a>
     <a href="../board/boardWriteForm.jsp">글쓰기</a>
-    <a href="">목록</a>
+    
+    <%}%>
+    <a href="../board/boardList.jsp?pg=1">목록</a>
 </nav>
 <section>
     <h2>메인화면</h2>

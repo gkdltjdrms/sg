@@ -8,6 +8,7 @@
 <head>
 <meta charset="UTF-8">
 <title>회원정보 수정</title>
+
 <style type="text/css">
         div {
             font-size: 10px;

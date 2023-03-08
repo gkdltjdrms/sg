@@ -102,8 +102,13 @@ public class MemberDAO {
 		
 	}
 
-	public String memberLogin(String id, String pwd){
-		String name = null;
+	public MemberDTO memberLogin(String id, String pwd){
+		//String name = null;
+		//String email1 = null;
+		//String email2 = null;
+		MemberDTO memberDTO = null;
+		
+		
 		String sql = "select * from member where id=? and pwd=?";
 		getConnection(); //접속
 		try {
@@ -113,7 +118,14 @@ public class MemberDAO {
 			rs = pstmt.executeQuery(); //ResultSet 리턴
 			
 			if (rs.next()) {
-				name = rs.getString("name");
+				memberDTO = new MemberDTO();
+				memberDTO.setName(rs.getString("name"));
+				memberDTO.setEmail1(rs.getString("email1"));
+				memberDTO.setEmail2(rs.getString("email2"));
+				
+				//name = rs.getString("name");
+				//email1 = rs.getString("email1");
+				//email2 = rs.getString("email2");
 				
 			}
 				
@@ -122,7 +134,7 @@ public class MemberDAO {
 		} finally {
 			MemberDAO.close(conn, pstmt, rs);
 		}	
-		return name;		
+		return memberDTO;		
 	}
 	
 	

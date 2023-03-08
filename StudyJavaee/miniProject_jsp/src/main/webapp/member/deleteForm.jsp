@@ -33,6 +33,8 @@ div#pwdDiv {
 </style>
 </head>
 <body>
+<img src="../image/image2.png" width="120" height="100" alt="망상토끼"
+     onclick="location.href='../member/index.jsp'" style="cursor: pointer">
 <form name="deleteForm" method="post" action="deleteForm.jsp">
 	<div style="text-align: center;">
 		비밀번호 입력 : <input type="password" name="pwd" id="pwd">

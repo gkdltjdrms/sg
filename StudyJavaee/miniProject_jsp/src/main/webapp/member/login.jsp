@@ -17,7 +17,7 @@ pageEncoding="UTF-8"%>
 	
 	// DB
 		MemberDAO memberDAO = MemberDAO.getInstance();
-		String name = memberDAO.memberLogin(login_id, login_pw);
+		MemberDTO memberDTO = memberDAO.memberLogin(login_id, login_pw);
 		
 		
 		//쿠키
@@ -25,29 +25,16 @@ pageEncoding="UTF-8"%>
 				
 	
 		
-	if (name == null ) {
+	if (memberDTO == null ) {
 		//페이지 이동
 		response.sendRedirect("loginFail.jsp");
 
 	} else {
-		//쿠키
-		/*
-		Cookie cookie = new Cookie("memName", name);
-		cookie.setMaxAge(30 * 60); //초 단위  -30분
-		response.addCookie(cookie);//클라이언트 보내기
-		
-		Cookie cookie2 = new Cookie("memId", login_id);
-		cookie2.setMaxAge(30 * 60); //초 단위
-		response.addCookie(cookie2);//클라이언트 보내기
-		*/
-		//세션
-		//HttpSession session = request.getSession(); - jsp는 세션이 내장객체에 이미 들어가 있다
-		
-		session.setMaxInactiveInterval(30*60);
-		session.setAttribute("memName", name);
+		//세션생성
+		session.setAttribute("memName", memberDTO.getName());
 		session.setAttribute("memId", login_id);
-		System.out.println("이름 = " + session.getAttribute("memName"));
-		
+		session.setAttribute("memPwd", login_pw);
+		session.setAttribute("memEmail", memberDTO.getEmail1()+"@"+memberDTO.getEmail2());
 		
 		//페이지 이동
 		response.sendRedirect("loginOk.jsp");

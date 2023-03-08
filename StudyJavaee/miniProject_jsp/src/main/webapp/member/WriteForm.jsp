@@ -40,6 +40,9 @@ action="write.jsp">
 
 style="width: 500px;">
 
+<img src="../image/image2.png" width="120" height="100" alt="망상토끼"
+onclick="location.href='../member/index.jsp'" style="cursor: pointer">
+
 <tr>
 
 <th>이름</th>
