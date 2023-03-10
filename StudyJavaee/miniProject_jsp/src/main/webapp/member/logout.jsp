@@ -45,7 +45,7 @@
 <script type="text/javascript">
 window.onload=function(){
 	alert("로그아웃");
-	location.href = "index.jsp"
+	location.href = "../index.jsp"
 	
 }
 

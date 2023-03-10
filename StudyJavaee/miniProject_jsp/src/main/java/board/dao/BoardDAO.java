@@ -79,15 +79,21 @@ public class BoardDAO {
 		}
 	}
 	
-	public List<BoardDTO> boardList() {
+	public List<BoardDTO> boardList(Map<String, Integer> map) {
 		List<BoardDTO> list = new ArrayList<BoardDTO>();
 		
-		String sql = "select * from board order by ref desc, step asc";
+		String sql = "select * from\r\n"
+				+ "(select ROWNUM rn, TT.* from\r\n"
+				+ "(select * from BOARD order by ref desc, step asc) TT\r\n"
+				+ ")where rn>=? and rn<=?";
 		
 		try {
 			conn = ds.getConnection();
 			
 			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, map.get("startNum"));
+			pstmt.setInt(2, map.get("endNum"));
+			
 			rs = pstmt.executeQuery();//실행-ResultSet 리턴
 			
 			while(rs.next()) {
@@ -146,6 +152,44 @@ public class BoardDAO {
 		
 		
 		return result;
+	}
+	
+	public BoardDTO getBoard(int seq) {
+		BoardDTO boardDTO = null;
+		String sql = "SELECT * FROM BOARD WHERE SEQ = ?";
+		
+		try {
+			conn = ds.getConnection();
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, seq);
+			
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				boardDTO = new BoardDTO();
+				boardDTO.setSeq(rs.getInt("seq"));
+				boardDTO.setId(rs.getString("id"));
+				boardDTO.setName(rs.getString("name"));
+				boardDTO.setEmail(rs.getString("email"));
+				boardDTO.setSubject(rs.getString("subject"));
+				boardDTO.setContent(rs.getString("content"));
+				boardDTO.setRef(rs.getInt("ref"));
+				boardDTO.setLev(rs.getInt("lev"));
+				boardDTO.setStep(rs.getInt("step"));
+				boardDTO.setPseq(rs.getInt("pseq"));
+				boardDTO.setReply(rs.getInt("reply"));
+				boardDTO.setHit(rs.getInt("hit"));
+				boardDTO.setLogtime(rs.getDate("logtime"));
+				
+				
+				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			BoardDAO.close(conn, pstmt, rs);
+		}
+		return boardDTO;
 	}
 }
 

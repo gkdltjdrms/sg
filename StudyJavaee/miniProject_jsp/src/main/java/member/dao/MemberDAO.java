@@ -238,6 +238,31 @@ public class MemberDAO {
 			MemberDAO.close(conn, pstmt);
 		}
 	}
+	
+	public boolean isExistId(String id) {
+		
+		boolean existId = false;
+		String sql = "select * from member where id=?";
+		
+		try {
+			conn = ds.getConnection();
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) existId = true;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			MemberDAO.close(conn, pstmt, rs);
+		}
+		return existId;
+	}
+	
+	
 }
 
 

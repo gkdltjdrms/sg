@@ -46,7 +46,7 @@
 <script type="text/javascript">
 window.onload=function(){
 	alert("글작성 완료");
-	location.href='../member/index.jsp?pg=1';
+	location.href='../index.jsp?pg=1';
 }
 
 

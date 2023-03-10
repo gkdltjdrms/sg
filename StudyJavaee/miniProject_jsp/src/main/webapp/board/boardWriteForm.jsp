@@ -20,7 +20,7 @@
 	<table border="1" cellpadding="5" cellspacing="0">
 			
 			<img src="../image/image2.png" width="120" height="100" alt="망상토끼"
-				onclick="location.href='../member/index.jsp'" style="cursor: pointer">
+				onclick="location.href='../index.jsp'" style="cursor: pointer">
 				
 						<h3>글 쓰기</h3>
 				

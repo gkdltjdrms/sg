@@ -16,6 +16,23 @@
 
 <style type="text/css">
 
+  body {
+        font-family: sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+
+img.logo {
+  width: 120px;
+  height: 100px;
+  cursor: pointer;
+}
+
 div {
 
 color: red;
@@ -25,6 +42,30 @@ font-size: 8pt;
 font-weight: bold;
 
 }
+
+input[type=text], input[type=password], select {
+  width: 100%;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+input[type=button], input[type=reset] {
+  background-color: #7f8c8d;
+  border: none;
+  color: white;
+  padding: 8px 16px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 8px;
+  border-radius: 7px;
+  cursor: pointer;
+}
+
 
 </style>
 
@@ -40,8 +81,8 @@ action="write.jsp">
 
 style="width: 500px;">
 
-<img src="../image/image2.png" width="120" height="100" alt="망상토끼"
-onclick="location.href='../member/index.jsp'" style="cursor: pointer">
+<img class="logo" src="../image/image2.png" width="120" height="100" alt="망상토끼"
+onclick="location.href='../index.jsp'" style="cursor: pointer">
 
 <tr>
 
@@ -59,9 +100,8 @@ placeholder="이름 입력" style="width: 100px">
 
 <th>아이디</th>
 
-<td><input type="text" name="id" id="id" placeholder="아이디 입력"
-
-size="30">
+<td><input type="text" name="id" id="id" placeholder="아이디 입력" size="30">
+	<input type="button" value="중복체크" onclick="checkId()">
 
 <div id="idDiv"></div></td>
 
@@ -153,23 +193,18 @@ style="width: 100px;" name="email3" id="email3" onchange="select()">
 
 </tr>
 
-<tr>
 
-<th>주소</th>
-
-<td><input type="text" name="zipcode" id="zipcode"
-
-placeholder="우편번호" size="5" readonly> <input type="button"
-
-value="우편번호검색" onclick="execDaumPostcode()"> <br> <input type="text"
-
-name="addr1" id="addr1" placeholder="기본주소" style="width: 400px;"
-
-readonly> <input type="text" name="addr2" id="addr2"
-
-placeholder="상세주소" style="width: 400px;"></td>
-
-</tr>
+ <tr>
+   <th>주소</th>
+   <td>
+    <input type="text" name="zipcode" id="zipcode" size="5" placeholder="우편번호" readonly>
+    <input type="button" value="우편번호검색" onclick="execDaumPostcode()">
+    <br>
+    <input type="text" name="addr1" id="addr1" style="width: 400px;" placeholder="주소" readonly/>
+    <br>
+    <input type="text" name="addr2" id="addr2" style="width: 400px;" placeholder="상세주소" />
+   </td>
+  </tr>
 
 <tr>
 
@@ -182,7 +217,7 @@ value="회원가입" onclick="checkWrite()"> <input type="reset"
 
 value="다시작성">
 
-<input type="button" value="로그인" onclick="location.href='http://localhost:8080/memberJSP/member/loginForm.jsp';">
+<input type="button" value="로그인" onclick="location.href='http://localhost:8080/miniProject_jsp/member/loginForm.jsp';">
 
 </td>
 
@@ -197,7 +232,19 @@ value="다시작성">
 <!-- <script type="text/javascript" src="http://localhost:8080/memberServlet2/js/member.js"> -->
 
 <script type="text/javascript" src="../js/member.js"></script>
+<script type="text/javascript">
+function checkId() {
+	  var id = document.getElementById("id").value;
+	  
+	  if (id == "") {
+	    document.getElementById("idDiv").innerHTML = "<font color='magenta'>먼저 아이디를 입력하세요</font>";
+	  } else {
+	    window.open("./checkId.jsp?id=" + id, "checkId", "width=300 height=150 left=900 top=200");
+	  }
+	}
 
+
+</script>
 
 </body>
 

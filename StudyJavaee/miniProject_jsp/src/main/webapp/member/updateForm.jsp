@@ -36,8 +36,8 @@
 <form name="updateForm" method="post" action="update.jsp">
     <table border="1" cellpadding="5" cellspacing="0" style="width: 500px;">
      
-     <img src="../image/image2.png" width="70" height="50" alt="망상토끼"
- onclick="location.href='index.jsp'" style="cursor: pointer">   
+    <img src="../image/image2.png" width="120" height="100" alt="망상토끼"
+     onclick="location.href='../index.jsp'" style="cursor: pointer">
         
         
         <tr>

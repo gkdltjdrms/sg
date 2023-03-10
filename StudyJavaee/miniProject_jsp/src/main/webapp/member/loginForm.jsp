@@ -64,7 +64,7 @@
 </head>
 <body>
   <img src="../image/image2.png" width="120" height="100" alt="망상토끼"
-				onclick="location.href='../member/index.jsp'" style="cursor: pointer">
+				onclick="location.href='../index.jsp'" style="cursor: pointer">
   <h1>로그인</h1>
   <form name="loginform" method="post" action="http://localhost:8080/miniProject_jsp/member/login.jsp">
     <label for="login_id">아이디:</label>

@@ -37,7 +37,7 @@ memberDTO.setAddr2(addr2);
 
 // DB
 MemberDAO memberDAO = MemberDAO.getInstance(); // 클래스 생성
-int su = (int) memberDAO.memberUpdate(memberDTO);
+memberDAO.memberUpdate(memberDTO); //호출
 
 %>
 
