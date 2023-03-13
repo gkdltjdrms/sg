@@ -50,6 +50,21 @@
   input[type="submit"]:hover {
     background-color: #3e8e41;
   }
+  
+  
+   input[type="button"] {
+    background-color: #4CAF50;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  input[type="button"]:hover {
+    background-color: #3e8e41;
+  }
+  
   .error {
     color: red;
     font-weight: bold;
@@ -74,6 +89,7 @@
     <input type="password" id="login_pw" name="login_pw" placeholder="비밀번호 입력">
     <div class="error" id="pw_check"></div>
     <input type="submit" value="로그인" onclick="check_login()">
+     <input type="button" value="회원가입" onclick="location.href='http://localhost:8080/miniProject_jsp/member/WriteForm.jsp';">
   </form>
   <script> 
     const form = document.loginform;

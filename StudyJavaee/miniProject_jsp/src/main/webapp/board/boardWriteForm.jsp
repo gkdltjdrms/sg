@@ -2,51 +2,117 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>board</title>
-<style type="text/css">
-        div {
-            font-size: 8px;
-            color: red;
-            font-weight: bold;
-        }
-        
-        
-    </style>
-
+  <meta charset="UTF-8">
+  <title>게시판 글쓰기</title>
+  <style type="text/css">
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      color: #333;
+      background-color: #fff;
+      margin: 0;
+      padding: 0;
+    }
+    
+    h1 {
+      font-size: 32px;
+      font-weight: bold;
+      margin: 50px 0 30px;
+      text-align: center;
+    }
+    
+    form {
+      width: 600px;
+      margin: 0 auto;
+    }
+    
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-bottom: 30px;
+    }
+    
+    th {
+      font-weight: bold;
+      vertical-align: top;
+      padding: 10px;
+      border: 1px solid #ccc;
+      background-color: #eee;
+    }
+    
+    td {
+      padding: 10px;
+      border: 1px solid #ccc;
+    }
+    
+    input[type="text"],
+    textarea {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+      resize: vertical;
+    }
+    
+    .error {
+      color: red;
+      font-weight: bold;
+    }
+    
+    input[type="submit"],
+    input[type="reset"] {
+      display: inline-block;
+      background-color: #333;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      font-weight: bold;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    
+    input[type="reset"] {
+      margin-left: 20px;
+      background-color: #ccc;
+      color: #333;
+    }
+    
+  </style>
 </head>
 <body>
-<form name="boardWriteForm" method="post" action="boardWrite.jsp">
-	<table border="1" cellpadding="5" cellspacing="0">
-			
-			<img src="../image/image2.png" width="120" height="100" alt="망상토끼"
-				onclick="location.href='../index.jsp'" style="cursor: pointer">
-				
-						<h3>글 쓰기</h3>
-				
-				
-			<tr>
-				<th>제목</th>
-				<td>
-					<input type="text" name="subject" id="subject" placeholder="제목 입력" size="50">
-					<div id="subjectDiv"></div>
-				</td>
-			</tr>
-			<tr>
-				<th>내용</th>
-				<td>
-					<textarea name="content" id="content" cols="50" rows="15"></textarea>
-					<div id="contentDiv"></div>
-				</td>
-			</tr>
-			<tr>
-				<td colspan="2" align="center">
-					<input type="button" value="글쓰기" onclick="checkBoardWrite()">
-					<input type="reset" value="다시작성">
-				</td>
-			</tr>
-		</form>
-	</table>
+
+  <h1><img src="../image/image2.png" width="120" height="100" alt="망상토끼" onclick="location.href='../index.jsp'" style="cursor: pointer">
+  게시판 글쓰기</h1>
+  <form name="boardWriteForm" method="post" action="boardWrite.jsp">
+    <table>
+      <tr>
+        <th>제목</th>
+        <td>
+          <input type="text" name="subject" id="subject" placeholder="제목을 입력하세요">
+          <div id="subjectDiv" class="error"></div>
+        </td>
+      </tr>
+      <tr>
+        <th>내용</th>
+        <td>
+          <textarea name="content" id="content" rows="10" placeholder="내용을 입력하세요"></textarea>
+          <div id="contentDiv" class="error"></div>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2" align="center">
+          <input type="submit" value="글쓰기" onclick="checkBoardWrite()">
+          <input type="reset" value="다시 작성">
+        </td>
+      </tr>
+    </table>
+  </form>
+
+
 
 	<script type="text/javascript">
 	function checkBoardWrite(){

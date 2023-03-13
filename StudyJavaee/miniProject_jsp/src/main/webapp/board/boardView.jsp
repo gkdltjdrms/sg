@@ -97,15 +97,18 @@
             height: 100px;
             cursor: pointer;
         }
+        
     </style>
 
-<img src="../image/image2.png" width="120" height="100" alt="망상토끼"
-				onclick="location.href='../index.jsp'" style="cursor: pointer">
-				작성한 글확인
+		<div style="float: left;">
+    	<img src="../image/image2.png" width="120" height="100" alt="망상토끼" onclick="location.href='../index.jsp'" style="cursor: pointer">
+		</div>
+		<h1>작성한 글 확인</h1>
+		
 </head>
 <body>
 <%if(boardDTO != null){ %>
-    <table border="1" cellpadding="5" cellspacing="0" style="width: 800px;">
+    <table width:450; border="1" cellpadding="5" cellspacing="0" style="width: 800px;">
         <tr>
             <th style="font-size: 20px; color: black; text-align: center;">
                 제목 :<%=boardDTO.getSubject()%>
@@ -114,15 +117,24 @@
         <tr>
             <td style="text-align: center;">
                 글번호: <%=boardDTO.getSeq()%> &nbsp;&nbsp; 
-                작성자: <%=boardDTO.getName()%>
+                작성자: <%=boardDTO.getName()%>&nbsp;&nbsp;
+                조회수: <%=boardDTO.getHit()%>
             </td>
         </tr>
-        <tr>
-            <td>
-            내용 :
-                <pre><%=boardDTO.getContent()%></pre>
+        
+        
+       <tr>
+            <td colspan="3" height="250" valign="top">
+               <div style="width: 100%; height: 100%; overflow: auto;"> <!-- 밑으로 긴 글일때 스크롤바가 뜨게 -->
+                  <pre style="white-space: pre-line; word-break: break-all;">
+                     <%=boardDTO.getContent() %>
+                  </pre>
+               </div>
             </td>
-        </tr>
+         </tr>
+        
+        
+        
         <tr>
             <td>
                 <input type="button" value="목록" onclick="location.href='boardList.jsp?pg=<%=pg%>'">

@@ -49,6 +49,7 @@ boardPaging.makePaginHTML();
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
 <style type="text/css">
 .subjectA:link {
 	color: black;
@@ -84,11 +85,57 @@ boardPaging.makePaginHTML();
 	margin: 5px;
 	cursor: pointer;
 }
+
+
+body {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 16px;
+	color: #333;
+}
+
+table {
+	border-collapse: collapse;
+	margin: 20px auto;
+}
+
+th, td {
+	padding: 10px;
+	text-align: center;
+}
+
+th {
+	background-color: #f1f1f
+	}
+	
+	#board-container {
+		display: flex;
+		align-items: center;
+	}
+	
+	#board-title {
+		flex: 1;
+		text-align: left;
+		
+	}
+
+	#board-image {
+		margin-right: 20px;
+		cursor: pointer;
+	}
+	
+
 </style>
 </head>
 <body>
-	<img src="../image/image2.png" width="120" height="100" alt="망상토끼"
-		onclick="location.href='../index.jsp'" style="cursor: pointer">
+	<div id="board-container">
+		<div id="board-image">
+			<img src="../image/image2.png" width="120" height="100" alt="망상토끼"
+				onclick="location.href='../index.jsp'">
+		</div>
+		<div id="board-title">
+			<h1>게시판 목록</h1>
+		</div>
+	</div>
 	<table border="1" cellpadding="5" cellspacing="0" frame="hsides"
 		rules="rows">
 		<tr>
@@ -133,8 +180,10 @@ function boardPaging(pg) {
 }
 
 function isLogin(memId, seq, pg) {
-    if(memId == 'null') 
+    if(memId == 'null') {
         alert("먼저 로그인을 하세요");
+    location.href = "../member/loginForm.jsp";
+    }
     else
         location.href="boardView.jsp?seq=" + seq + "&pg=" + pg;
 }

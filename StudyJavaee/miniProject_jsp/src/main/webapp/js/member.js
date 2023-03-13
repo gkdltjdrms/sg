@@ -28,6 +28,9 @@ else if (document.getElementById("pwd").value != document.getElementById("repwd"
 
 document.getElementById("pwdDiv").innerText = "비밀번호가 맞지 않습니다";
 
+else if(document.getElementById("id").value != document.getElementById("check").value)
+	document.getElementById("idDiv").innerText="중복체크 하세요";
+
 else
 
 document.writeForm.submit();

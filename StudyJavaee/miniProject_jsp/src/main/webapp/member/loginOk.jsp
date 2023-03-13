@@ -10,7 +10,6 @@
 	
 	
 	name = (String)session.getAttribute("memName");
-	System.out.println(name);
 	login_id = (String)session.getAttribute("memId");
 	
 %>
@@ -26,10 +25,22 @@
 
 		<h3><%=name%>님이 로그인 하였습니다</h3>
 		
+		<!-- 
 		<input type="button" value="홈" onclick="location.href='../index.jsp'">
 		<input type="button" value="회원정보 수정" onclick="location.href='updateForm.jsp'">
 		<input type="button" value="로그아웃" onclick="location.href='logout.jsp'">
 		<input type="button" value="회원탈퇴" onclick="location.href='deleteForm.jsp'">
+		 -->
+
+ <script>
+        // 1초 뒤 index.jsp로 이동하는 함수
+        function movePage() {
+            location.href='../index.jsp';
+        }
+        
+        // 로그인 후 1초 뒤 페이지 이동
+        setTimeout("movePage()", 1000);
+    </script>
 
 
 </body>

@@ -7,6 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
 <%
 	//data
 	String id = request.getParameter("id"); // 클라이언트에서 전송한 아이디값을 가져온다.
@@ -35,11 +36,10 @@
  <script type="text/javascript">
            
  function checkIdClose(id){
-	alert("하이");
-	    // 아이디 사용 가능 시 창 닫기 및 부모 창에 값 전달
-	    window.opener.writeForm.id.value = id;
-	    opener.writeForm.pwd.focus();
-	    window.close();
+		opener.writeForm.id.value = id
+		opener.writeForm.check.value = id // 중복체크 버튼을 눌렀다는 확인
+		window.close()
+		opener.writeForm.pwd.focus()
 	}
  
  //중복체크를 할때 빈공간 일시 다시 적는 함수
@@ -54,7 +54,6 @@
  
  
  </script>
-
 
 </body>
 </html>

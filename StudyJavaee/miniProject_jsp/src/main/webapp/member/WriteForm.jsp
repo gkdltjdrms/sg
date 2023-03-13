@@ -101,6 +101,9 @@ placeholder="이름 입력" style="width: 100px">
 <th>아이디</th>
 
 <td><input type="text" name="id" id="id" placeholder="아이디 입력" size="30">
+
+	<input type="hidden" id="check" value="">
+
 	<input type="button" value="중복체크" onclick="checkId()">
 
 <div id="idDiv"></div></td>
@@ -239,7 +242,7 @@ function checkId() {
 	  if (id == "") {
 	    document.getElementById("idDiv").innerHTML = "<font color='magenta'>먼저 아이디를 입력하세요</font>";
 	  } else {
-	    window.open("./checkId.jsp?id=" + id, "checkId", "width=300 height=150 left=900 top=200");
+	    window.open("./checkId.jsp?id=" + id, "checkId", "width=700 height=300 left=900 top=200");
 	  }
 	}
 
