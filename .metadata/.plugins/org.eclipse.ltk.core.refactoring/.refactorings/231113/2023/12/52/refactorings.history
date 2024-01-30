@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Encapsulate field &apos;com.mycompany.myapp.BoardDto.loginId&apos; in &apos;com.mycompany.myapp.BoardDto&apos;&#x0D;&#x0A;- Original project: &apos;231113&apos;&#x0D;&#x0A;- Original element: &apos;com.mycompany.myapp.BoardDto.loginId&apos;&#x0D;&#x0A;- Getter method name: &apos;getLoginId&apos;&#x0D;&#x0A;- Setter method name: &apos;setLoginId&apos;&#x0D;&#x0A;- Field visibility: &apos;public&apos;&#x0D;&#x0A;- Use getter and setter methods in declaring type" comments="false" declaring="true" description="Encapsulate field &apos;loginId&apos;" flags="589830" getter="getLoginId" id="org.eclipse.jdt.ui.self.encapsulate" input="/src\/main\/java&lt;com.mycompany.myapp{BoardDto.java[BoardDto^loginId" insertion="29" setter="setLoginId" stamp="1703744745053" version="1.0" visibility="1"/>
+</session>

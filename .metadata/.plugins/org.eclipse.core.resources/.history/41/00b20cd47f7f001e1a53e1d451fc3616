@@ -1,0 +1,192 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+<script>
+	$(function(){
+		
+		$("#idChk").click(function(){
+			
+			
+			var id = $("#id").val();
+			var engNum =  /^[a-zA-Z0-9]*$/;
+			
+			
+			if(id == ''){
+				alert('아이디를 입력하세요');
+				$("#id").focus();
+			}else if(!engNum.test(id)){
+				alert("영어 숫자");
+				$("#id").val("").focus();
+			}else if(id == 'test'){
+				alert("중복");
+				$("#id").val("").focus();
+			}else{
+				alert("사용 가능한 아이디");
+			}
+			
+		})
+		
+		$("#name").keyup(function(){
+			
+			if($("#name").val().length > 5){
+				$("#name").val( $("#name").val().slice(0, 5) );
+			}
+			
+		})
+		
+		$("#jumin2").keyup(function(){
+			var jumin2 = $("#jumin2").val().charAt($("#jumin2").val().length - 1);
+			$("#jumin3").val($("#jumin3").val() + jumin2);
+			
+			if($("#jumin2").val().length > 1){
+				$("#jumin2").val( $("#jumin2").val().slice(0, -1) + '*' );
+			}
+		})
+		
+		
+		
+		
+		
+		$("#all").click(function(){
+			
+			if($("#all").is(":checked")){
+				$("[name=chk]").prop("checked",true);
+			}else{
+				$("[name=chk]").prop("checked",false);
+			}
+		})
+		
+		$("#btn").click(function(){
+			var checked = $("[name=chk]:checked").length;
+			
+			if(checked == 0){
+				alert("항목 체크");
+			}else if(checked < 5 || $("#all").is(":checked")){
+				alert("성공");
+			}else{
+				alert("실패");
+			}
+		})
+		
+		$("[name=chk]").click(function(){
+			var checkbox = $("[name=chk]").length;
+			var checked = $("[name=chk]:checked").length;
+			
+			if(checkbox == checked){
+				$("#all").prop("checked",true);
+			}else{
+				$("#all").prop("checked",false);
+			}
+			
+			if($(this).is(":checked")){
+				$("#txtDv").append($(this).val());
+			}else{
+				$("#txtDv").text( $("#txtDv").text().replace($(this).val(),'') );
+			}
+			
+			$("#all").click(function(){		
+				alert('check');
+				  if ($("#all").is(":checked")) {
+				        // Find all checked elements except the current one
+				        var checkedElements = $("input[type='checkbox']:checked").not(this);
+				        
+				        // Append their values to #txtDv
+				        checkedElements.each(function () {
+				            $("#txtDv").append($(this).val());
+				        });
+				    } else {
+				        $("#txtDv").text(''); // Clear the content
+				}
+			})
+			
+			
+			
+			
+// 			$(this)
+		})
+		
+	})
+	
+</script>
+</head>
+<body>
+
+
+<div>
+
+	<div id = "chkDiv">
+		<input type = "checkbox" name = "all" id = "all" ><label for="all">전체</label>
+		<input type = "button" name = "btn" id = "btn" value = "버튼">
+	</div>
+	<div id = "checkBox">
+		<input type = "checkbox" name = "chk" id = "chk1" value = "체크1"  class = "aa" >체크1
+		<input type = "checkbox" name = "chk" id = "chk2" value = "체크2">체크2
+		<input type = "checkbox" name = "chk" id = "chk3" value = "체크3">체크3
+		<input type = "checkbox" name = "chk" id = "chk4" value = "체크4">체크4
+		<input type = "checkbox" name = "chk" id = "chk5" value = "체크5">체크5
+		<input type = "checkbox" name = "chk" id = "chk6" value = "체크6">체크6
+		<input type = "checkbox" name = "chk" id = "chk7" value = "체크7">체크7
+		<input type = "checkbox" name = "chk" id = "chk8" value = "체크8">체크8
+		<input type = "checkbox" name = "chk" id = "chk9" value = "체크9">체크9
+	</div>
+	<div id = "txtDv"></div>
+	</div>
+</div>
+
+
+
+
+
+
+
+<form>
+ <table width="1400" height="650">
+  <tr>
+   <td width="100%" height="10%">회원가입</td>
+  </tr>
+  <tr>
+   <td height="60%" align="center" valign="top">
+   <hr><br>
+   <p align="left" style="padding-left:160px">
+   <br><br>
+   ID : <input type="text" size="10" maxlength="15" name="id" id = "id">
+   		<input type = "button" name = "idChk" id = "idChk" value = "중복체크">
+   <br><br>
+   비밀번호 : <input type="password" size="15" maxlength="20" name="pass" id = "pass"><br><br>
+   비밀번호 확인 : <input type="password" size="15" maxlength="20" name="pass2" id = "pass2"><br><br>
+   이름 : <input type="text" size="13" name="name" id = "name"><br><br>
+   이메일 : <input type="text" size="15" name="email1" id = "email1">@<input type="text" size="15" name="email2" id = "email2"><br><br>
+   휴대폰 : <select name="ph1">
+       <option value="010">010</option>
+       <option value="011">011</option>
+       <option value="016">016</option>
+       <option value="017">017</option>
+       <option value="019">019</option>
+     </select>
+     - <input type="text" name="ph2" size="5" maxlength="4" id = "ph2"> - <input type="text" name="ph3" size="5" maxlength="4" id = "ph3"><br><br>
+   성별 : <input type="radio" name="gender" value="남자"> 남자&nbsp;&nbsp;
+   <input type="radio" name="gender" value="여자"> 여자<br><br>
+   주민번호 : <input type = "text" name = "jumin1" id = "jumin1"> -  <input type = "text" name = "jumin2" id = "jumin2"><br><br>
+   			<input type = "hidden" name = "jumin3" id = "jumin3">
+   주소 : <input type="text" name="address" size="15" maxlength="15"><br>
+   *주소는 (시/도)만 입력해주세요 (예: 경기도, 서울특별시, 경상남도 등)
+   </p>
+  </td>
+  </tr>
+  <tr>
+   <td align="center">
+   <hr><br>
+    <input type="button"  id = "regi_btn" value="가입신청">&nbsp;
+    <input type="reset" value="다시입력">&nbsp;
+    <input type="button" value="취소">
+   </td>
+  </tr>
+ </table>
+</form>
+</body>
+</html>

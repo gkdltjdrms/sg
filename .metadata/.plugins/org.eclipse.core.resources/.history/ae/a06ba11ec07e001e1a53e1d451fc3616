@@ -1,0 +1,128 @@
+<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
+<!DOCTYPE html>
+<html>
+<head>
+   
+</head>
+<body>
+    <label>
+        <input type="checkbox" id="selectAll"> 전체
+    </label>
+    <button id="clickbtn">버튼</button>
+    <br>
+    <label>
+        <input type="checkbox" class="selectCity" value="서울"> 서울
+    </label>
+    <label>
+        <input type="checkbox" class="selectCity" value="인천"> 인천
+    </label>
+    <label>
+        <input type="checkbox" class="selectCity" value="경기"> 경기
+    </label>
+    <label>
+        <input type="checkbox" class="selectCity" value="강원"> 강원
+    </label>
+    <label>
+        <input type="checkbox" class="selectCity" value="부산"> 부산
+    </label>
+    <label>
+        <input type="checkbox" class="selectCity" value="대전"> 대전
+    </label>
+    <label>
+        <input type="checkbox" class="selectCity" value="전남"> 전남
+    </label>
+    <label>
+        <input type="checkbox" class="selectCity" value="제주"> 제주
+    </label>
+    <label>
+        <input type="checkbox" class="selectCity" value="평양"> 평양
+    </label>
+    
+    <!-- 버튼을 클릭하면 선택된 도시들을 출력할 div -->
+    <div id="selectedCities"></div>
+
+    <!-- jQuery CDN 사용 예시 -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+    $(document).ready(function() {
+        // 전체 체크박스
+        const selectAll = $("#selectAll");
+
+        // 선택된 도시들을 저장할 배열
+        const selectedCities = [];
+
+        // 전체 체크박스가 클릭되었을 때
+        selectAll.click(function() {
+            // 모든 도시 체크박스를 전체 선택 체크박스에 맞게 설정
+            const selectCityCheckboxes = $(".selectCity");
+            selectCityCheckboxes.prop("checked", selectAll.prop("checked"));
+            // 선택된 도시들을 업데이트
+            updateSelectedCitiesText();
+        });
+
+        // 선택 도시 체크박스 중 하나라도 해제되면
+        $(".selectCity").click(function() {
+            const selectCityCheckboxes = $(".selectCity");
+            // 모든 도시 체크박스가 선택되었으면 전체 선택 체크박스도 체크
+            if (selectCityCheckboxes.filter(":checked").length === selectCityCheckboxes.length) {
+                selectAll.prop("checked", true);
+            } else {
+                // 하나라도 해제되었으면 전체 선택 체크박스도 해제
+                selectAll.prop("checked", false);
+            }
+            // 선택된 도시들을 업데이트
+            updateSelectedCitiesText();
+        });
+
+     // 선택 도시 체크박스가 클릭될 때
+        $(".selectCity").click(function() {
+            const selectedCity = $(this).val();
+
+            // 선택된 도시가 배열에 없으면 추가
+            if (this.checked && selectedCities.indexOf(selectedCity) === -1) {
+                selectedCities.push(selectedCity);
+            } else if (!this.checked) {
+                // 선택이 해제되었으면 배열에서 제거
+                const index = selectedCities.indexOf(selectedCity);
+                if (index !== -1) {
+                    selectedCities.splice(index, 1);
+                }
+            }
+
+            // 선택된 도시들을 업데이트
+            updateSelectedCitiesText();
+        });
+
+
+        // 버튼 클릭 시
+        $("#clickbtn").click(function() {
+            // 선택된 도시들을 업데이트
+            updateSelectedCitiesText();
+            // 전체 선택 체크박스가 선택되었거나 선택된 도시가 4개 이하일 경우 성공 알림
+            if ($("#selectAll").is(":checked") || selectedCities.length <= 4) {
+                alert("성공");
+            } else {
+                // 그렇지 않으면 실패 알림
+                alert("실패");
+            }
+        });
+
+     // 선택된 도시들을 업데이트하는 함수
+        function updateSelectedCitiesText() {
+            // 배열 비우기
+            selectedCities.length = 0;
+            // 선택된 도시 체크박스들을 순서대로 확인하며 선택된 도시들을 배열에 추가
+            $(".selectCity:checked").each(function() {
+                selectedCities.push($(this).val());
+                console.log( selectedCities);
+            });
+            // 선택된 도시들을 출력하는 div 업데이트
+            $("#selectedCities").text("선택된 도시들: " + selectedCities.join(", "));
+        }
+
+    });
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,72 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<html>
+<head>
+    <title>User Information</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 50%;
+            margin: 20px;
+        }
+
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+    <script>
+        function showTranslation(element) {
+            var job = element.getAttribute("data-job");
+            var translation = "";
+
+            switch (job) {
+                case "student":
+                    translation = "학생";
+                    break;
+                case "programmer":
+                    translation = "개발자";
+                    break;
+                case "doctor":
+                    translation = "의사";
+                    break;
+                // 추가 직업에 대한 번역 추가 가능
+            }
+
+            element.title = translation;
+        }
+    </script>
+</head>
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Job</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Kim</td>
+                <td>20</td>
+                <td data-job="student" onmouseover="showTranslation(this)">Student</td>
+            </tr>
+            <tr>
+                <td>Lee</td>
+                <td>25</td>
+                <td data-job="programmer" onmouseover="showTranslation(this)">Programmer</td>
+            </tr>
+            <tr>
+                <td>Choi</td>
+                <td>30</td>
+                <td data-job="doctor" onmouseover="showTranslation(this)">Doctor</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.BoardMapper">
+
+    <select id="getPost" resultMap="postResultMap">
+        SELECT
+         seq
+         , mem_id
+         , mem_name
+         , board_subject
+         , board_content
+         , reg_date, upt_date
+         , view_cnt
+        FROM board_study 
+        order by seq desc
+    </select>
+	
+	<insert id="savePost" parameterType="model.BoardWrite">
+    INSERT INTO board_study (seq, mem_name, mem_id, board_subject, board_content, reg_date)
+    VALUES ((SELECT MAX(seq) FROM board_study) + 1, #{mem_name}, #{mem_id}, #{board_subject}, #{board_content}, #{reg_date, jdbcType=TIMESTAMP})
+	</insert>
+	<!-- nvl 일경우 0으로 시작하게 끔 해야지 처음에 글을 작성할때 오류가 생기는것을 방지 할수 있다. -->
+	
+    <resultMap id="postResultMap" type="model.post">
+        <id property="seq" column="seq"/>
+        <result property="mem_id" column="mem_id"/>
+                <result property="mem_name" column="mem_name"/>
+        
+        <result property="board_subject" column="board_subject"/>
+        <result property="board_content" column="board_content"/>
+        <result property="reg_date" column="reg_date"/>
+        <result property="upt_date" column="upt_date"/>
+        <result property="view_cnt" column="view_cnt"/>
+    </resultMap>
+    
+     <!-- 새로운 getPostBySeq 쿼리 -->
+    <select id="getPostBySeq" resultMap="postResultMap" parameterType="int">
+        SELECT seq, mem_id, board_subject, board_content, reg_date, upt_date, view_cnt
+        FROM board_study
+        WHERE seq = #{value}
+    </select>
+    
+    <!-- 새로운 updatePost 쿼리 -->
+    <update id="updatePost" parameterType="model.post">
+        UPDATE board_study
+        SET mem_id = #{mem_id},
+            board_subject = #{board_subject},
+            board_content = #{board_content},
+            upt_date = #{upt_date}
+        WHERE seq = #{seq}
+    </update> 
+    
+     <!-- 글 삭제 쿼리 -->
+    <delete id="deletePost" parameterType="java.lang.Long">
+        DELETE FROM board_study WHERE seq = #{seq}
+    </delete>
+    
+	
+	  <!-- 다수의 포스트 삭제 쿼리 -->
+	  <delete id="deleteSelectedPosts" parameterType="java.util.List">
+	    	  DELETE FROM board_study WHERE seq IN
+	        <foreach collection="list" item="item" open="(" separator="," close=")">
+	            #{item}
+	        </foreach>
+	    </delete>
+	
+	
+<!-- 	  <select id="searchPostsByTitle" resultType="model.post">
+		    <![CDATA[
+		        SELECT * FROM board_study WHERE LOWER(board_subject) LIKE LOWER('%' || #{keyword} || '%')
+		    ]]>
+		</select>
+
+		<select id="searchPostsByTitleAndAuthor" resultType="model.post">
+		    <![CDATA[
+		        SELECT * FROM board_study
+		        WHERE LOWER(board_subject) LIKE LOWER('%' || #{keyword} || '%')
+		          OR LOWER(mem_name) LIKE LOWER('%' || #{keyword} || '%')
+		    ]]>
+		</select>
+		
+		<select id="searchPostsById" resultType="model.post">
+		    <![CDATA[
+		        SELECT * FROM board_study  
+		        WHERE LOWER(mem_id) LIKE LOWER('%' || #{keyword} || '%')
+		    ]]>
+		</select> -->
+		
+		
+		
+			<select id="searchPosts" parameterType="map" resultType="model.post">
+    SELECT * FROM board_study
+    <where>
+        <choose>
+            <!-- Title search -->
+            <when test="searchOption == 'title'">
+                AND LOWER(board_subject) LIKE LOWER('%' || #{keyword} || '%')
+            </when>
+
+            <!-- Title + Author search -->
+            <when test="searchOption == 'titleAndAuthor'">
+                AND LOWER(board_subject) LIKE LOWER('%' || #{keyword} || '%')
+                AND LOWER(mem_name) LIKE LOWER('%' || #{keyword} || '%')
+            </when>
+
+            <!-- ID search -->
+            <when test="searchOption == 'id'">
+                AND LOWER(mem_id) LIKE LOWER('%' || #{keyword} || '%')
+            </when>		
+            
+            
+			
+            <!-- Default: All search -->
+            <otherwise>
+                AND LOWER(board_subject) LIKE LOWER('%' || #{keyword} || '%')
+            </otherwise>
+        </choose>
+    </where>
+</select>
+
+
+
+
+
+
+	 
+    
+    
+    
+
+</mapper>

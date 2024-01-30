@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mycompany.myapp.SignDao">
+
+    <resultMap id="memberResultMap" type="com.mycompany.myapp.MemberDto">
+        <!-- DB의 컬럼명과 MemberDto의 필드를 매핑 -->
+        <result property="seq" column="SEQ"/>
+        <result property="id" column="ID"/>
+        <result property="pw" column="PW"/>
+        <result property="name" column="NAME"/>
+        <result property="rank" column="RANK"/>
+    </resultMap>
+    
+    <resultMap id="boardResultMap" type="com.mycompany.myapp.BoardDto">
+	    <id property="seq" column="SEQ"/>
+	    <result property="name" column="NAME"/>
+	    <result property="id" column="ID"/>
+	    <result property="subject" column="SUBJECT"/>
+	    <result property="content" column="CONTENT"/>
+	    <result property="regDate" column="REG_DATE"/>
+	    <result property="signDate" column="SIGN_DATE"/>
+	    <result property="signer" column="SIGNER"/>
+	    <result property="signStatus" column="SIGN_STATUS"/>
+	</resultMap>
+	
+	<resultMap id="HistoryResultMap" type="com.mycompany.myapp.HistoryDto">
+    <result column="seq" property="seq" />
+    <result column="sign_date" property="signDate" />
+    <result column="signer" property="signer" />
+    <result column="sign_status" property="signStatus" />
+    <result column="board_seq" property="boardSeq" />
+    <result column="history_seq" property="historySeq" />
+	</resultMap>
+	
+	<!-- 검색 조건 -->
+	<sql id="search">
+	    <if test="searchOption == '결재자' and searchKeyword != null">
+	        AND SIGNER LIKE '%' || #{searchKeyword} || '%'
+	    </if>
+	    <if test="searchOption == '제목/내용' and searchKeyword != null">
+	        AND SUBJECT LIKE '%' || #{searchKeyword} || '%'
+	    </if>
+	    
+	    <if test="searchStatus == '임시저장' and searchKeyword != null">
+	        AND SIGN_STATUS LIKE '%' || #{searchKeyword} || '%'
+	    </if>
+	    <if test="searchStatus == '결재요청' and searchKeyword != null">
+	        AND SIGN_STATUS LIKE '%' || #{searchKeyword} || '%'
+	    </if>
+	    <if test="searchStatus == '결재중' and searchKeyword != null">
+	        AND SIGN_STATUS LIKE '%' || #{searchKeyword} || '%'
+	    </if>
+	    <if test="searchStatus == '결재완료' and searchKeyword != null">
+	        AND SIGN_STATUS LIKE '%' || #{searchKeyword} || '%'
+	    </if>
+	    <if test="searchStatus == '반려' and searchKeyword != null">
+	        AND SIGN_STATUS LIKE '%' || #{searchKeyword} || '%'
+	    </if>
+	    	    
+		<if test="startDate != '' and startDate != null">
+		    AND REG_DATE BETWEEN TO_DATE(#{startDate}) AND TO_DATE(#{endDate})
+		</if>
+	</sql>
+	
+	
+	<!-- 결재 프로젝트 MAPPER -->
+    <!-- 사용자 조회 -->
+	<select id="selectMemberByUserId" resultMap="memberResultMap">
+	    SELECT
+	        SEQ,
+	        ID,
+	        PW,
+	        NAME,
+	        RANK
+	    FROM yeo_member 
+	    WHERE ID = #{userid}
+	</select>
+	
+	<!-- 최대 SEQ 값을 조회 -->
+	<select id="getMaxSeq" resultType="java.lang.Integer">
+	    SELECT NVL(MAX(SEQ), 0) FROM yeo_board
+	</select>
+
+	<insert id="selectInsert" parameterType="com.mycompany.myapp.BoardDto">
+	  <selectKey keyProperty="seq" resultType="int" order="BEFORE">
+	    SELECT NVL(MAX(SEQ), 0) + 1 FROM yeo_board
+	  </selectKey>
+	  INSERT INTO yeo_board (
+	    SEQ,
+	    ID,
+	    SUBJECT,
+	    CONTENT,
+	    REG_DATE,
+	    SIGNER,
+	    SIGN_STATUS
+	  )
+	  VALUES (
+	    #{seq},
+	    #{id},
+	    #{subject},
+	    #{content},
+	    SYSDATE,
+	    #{id},
+	    #{signStatus}
+	  )
+	</insert>
+
+	<!-- 게시글 수정 -->
+	<update id="selectUpdate" parameterType="com.mycompany.myapp.BoardDto">
+	    UPDATE yeo_board
+	    SET
+	        SUBJECT = #{subject},
+	        CONTENT = #{content},
+	        SIGN_DATE = SYSDATE,
+	        SIGN_STATUS = #{signStatus},
+	        SIGNER = #{loginId}
+	    WHERE
+	        SEQ = #{seq}
+	</update>
+
+	<!-- 사용자 게시글 목록 -->
+	<select id="selectList" resultMap="boardResultMap" parameterType="java.util.Map">
+	    SELECT
+	        b.SEQ,
+	        b.ID,
+	        b.SUBJECT,
+	        b.CONTENT,
+	        b.REG_DATE,
+	        b.SIGN_DATE,
+	        b.SIGNER,
+	        CASE b.SIGN_STATUS
+	            WHEN 'SAVE' THEN '임시저장'
+	            WHEN 'APPROVE' THEN '결재요청'
+	            WHEN 'REJECT' THEN '반려'
+	            WHEN 'ACCEPT' THEN '결재완료'
+	            ELSE b.SIGN_STATUS
+	        END AS SIGN_STATUS,
+	        m.NAME AS NAME
+	    FROM yeo_board b
+	    INNER JOIN yeo_member m ON b.ID = m.ID
+	    <where>
+	        OR b.id = #{userId}
+	        <if test='userRank == "과장"'>
+	            OR (b.SIGN_STATUS = '' OR b.SIGN_STATUS = 'APPROVE')
+	        </if>
+	        <if test='userRank == "부장"'>
+	            OR (b.SIGN_STATUS = '' OR b.SIGN_STATUS = 'APPROVEWAIT')
+	        </if>
+	    </where>
+	    ORDER BY b.SEQ DESC
+	</select>
+	
+	<!-- 사용자 게시글 상세 조회 -->
+	<select id="selectDetail" resultMap="boardResultMap" parameterType="int" resultType="com.mycompany.myapp.BoardDto">
+		SELECT
+			SEQ,
+			ID,
+			SUBJECT,
+			CONTENT,
+			REG_DATE,
+			SIGN_DATE,
+			SIGNER,
+			SIGN_STATUS
+		FROM yeo_board
+		WHERE SEQ = #{seq}
+	</select>
+	
+	<!-- 게시글 검색 -->
+	<select id="selectSearch" resultMap="boardResultMap" resultType="com.mycompany.myapp.BoardDto" parameterType="map">
+	    SELECT
+	        b.SEQ,
+	        b.ID,
+	        b.SUBJECT,
+	        b.CONTENT,
+	        b.REG_DATE,
+	        b.SIGN_DATE,
+	        b.SIGNER,
+	        CASE b.SIGN_STATUS
+	            WHEN 'SAVE' THEN '임시저장'
+	            WHEN 'APPROVE' THEN '결재요청'
+	            WHEN 'REJECT' THEN '반려'
+	            WHEN 'ACCEPT' THEN '결재완료'
+	            ELSE b.SIGN_STATUS
+	        END AS SIGN_STATUS,
+	        m.NAME AS NAME
+	    FROM yeo_board b
+	    INNER JOIN yeo_member m ON b.ID = m.ID
+	    WHERE 1=1
+	    <if test="userId != null and userId != ''">
+	        AND (
+	            b.ID = #{userId}
+	            <if test='userRank == "과장"'>
+	                OR (b.SIGN_STATUS = '' OR b.SIGN_STATUS = 'APPROVE')
+	            </if>
+	            <if test='userRank == "부장"'>
+	                OR (b.SIGN_STATUS = '' OR b.SIGN_STATUS = 'APPROVEWAIT')
+	            </if>
+	        )
+	    </if>
+	    <include refid="search" />
+	    <if test="searchOption == '작성자' and searchKeyword != null">
+	        AND m.NAME LIKE '%' || #{searchKeyword} || '%'
+	    </if>
+	</select>
+
+	<!-- 게시글 등록 시 결재내역 히스토리 -->
+	<insert id="selectHistoryInsert" parameterType="com.mycompany.myapp.BoardDto">
+	    INSERT INTO yeo_history (
+	      SEQ, SIGN_DATE, SIGNER, SIGN_STATUS, BOARD_SEQ, HISTORY_SEQ
+	    )
+	    VALUES (
+	      (SELECT COALESCE(MAX(SEQ), 0) + 1 FROM yeo_history),
+	      SYSDATE,
+	      #{loginId},
+	      #{signStatus},
+	      #{seq},
+	      (SELECT COALESCE(MAX(history_seq), 0) + 1 FROM yeo_history WHERE board_seq = #{seq})
+	    )
+	</insert>
+
+	<!-- 상세 조회 시 결재내역 히스토리 목록 -->
+	<select id="selectHistoryList" resultMap="HistoryResultMap" parameterType="int" resultType="com.mycompany.myapp.HistoryDto">
+	SELECT 
+	    H.SEQ,
+	    H.SIGN_DATE,
+	    H.SIGNER,
+	    CASE H.SIGN_STATUS
+	        WHEN 'SAVE' THEN '임시저장'
+	        WHEN 'APPROVE' THEN '결재요청'
+	        WHEN 'REJECT' THEN '반려'
+	        WHEN 'ACCEPT' THEN '결재완료'
+	        ELSE H.SIGN_STATUS
+	    END AS SIGN_STATUS,
+	    H.BOARD_SEQ,
+	    H.HISTORY_SEQ,
+	    M.NAME
+	FROM yeo_history H
+	JOIN yeo_member M ON H.SIGNER = M.ID
+	WHERE H.BOARD_SEQ = #{boardSeq}
+	</select>
+
+</mapper>

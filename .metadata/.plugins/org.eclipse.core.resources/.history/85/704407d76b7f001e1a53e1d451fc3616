@@ -1,0 +1,259 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+#head {
+    margin-bottom: 30px;
+    height: 75px;
+    border-bottom: 1px solid #000;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+footer {
+    margin-bottom: 50px;
+    height: 60px;
+    border-top: 1px solid #000; /* 상단에 가로선 스타일 및 색상 설정 */
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+footer button {
+    margin-left: 10px; /* 버튼 사이의 간격 설정 (선택사항) */
+}
+
+</style>
+
+</head>
+<body>
+	 <div id="head">회원가입</div>
+	
+	<form>
+		<label for="id">ID:</label> <input type="text" id="id" name="id" style="width: 120px;"
+			required>
+		<button type="submit">중복체크</button>
+		<br>
+		<br> <label for="password">비밀번호:</label> <input type="password"
+			id="password" name="password" required> <br>
+		<br> <label for="confirm_password">비밀번호 확인:</label> <input
+			type="password" id="confirm_password" name="confirm_password"
+			required><br>
+		<br> <label for="name">이름:</label>
+<input type="text" id="name" name="name" required maxlength="5"><br>
+
+		<br> <label for="email">이메일:</label> <input type="text"
+			id="email" name="email" required>@
+			<input type="text"
+			id="email2" name="email2" required>
+			
+			
+			<br> <br> 
+			<label for="phone">휴대폰:</label>
+				<select id="phone" name="phone" required>
+				  <option value="010">010</option>
+				  <option value="011">011</option>
+				  <option value="016">016</option>
+				  <option value="017">017</option>
+				  <option value="019">019</option>
+</select>
+-
+<input type="text" id="phone2" name="phone2" required maxlength="4" style="width: 70px;">
+-
+<input type="text" id="phone3" name="phone3" required maxlength="4" style="width: 70px;">
+			
+
+			
+		<br><br>
+		<label>성별:</label> <input type="radio" id="male"
+			name="gender" value="남자"> <label for="male">남자</label> <input
+			type="radio" id="female" name="gender" value="여자"> <label
+			for="female">여자</label><br>
+			
+			
+			
+		<br> <label for="ssn">주민번호:</label> <input type="text" id="ssn"
+			name="ssn"required> -
+			<input type="text" id="ssn2"
+			name="ssn2"required>
+			<input type="hidden" id="ssn3"
+			name="ssn3">
+			
+			<form onsubmit="return validate();">
+			
+			 <label for="unum1">주민번호 앞자리:</label>
+	        <input type="text" id="unum1" name="unum1" required>
+	
+	        <label for="unum2">주민번호 뒷자리:</label>
+	        <input type="text" id="unum2" name="unum2" required>
+	
+	        <button type="submit">Submit</button>
+			</form>
+			
+			
+			
+			
+			<br>
+		<br> <label for="address">주소:</label> <input type="text"
+			id="address" name="address" required><br>
+			*주소는 (시/도)만 입력해주세요 (예: 경기도, 서울특별시, 경상남도 등)
+		<br><br>
+		
+		<footer>
+		<button type="submit">가입신청</button>
+		<button type="reset">다시입력</button>
+		<button type="button">취소</button>
+		</footer>
+		
+	</form>
+
+
+
+<!-- jQuery CDN 사용 예시 -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+	 $("form").submit(function (event) {
+         return validate();
+     });
+	 
+	  function validate() {
+          var re = /^[a-zA-Z0-9]{4,12}$/; // 아이디와 패스워드가 적합한지 검사할 정규식
+          var re2 = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+          // 이메일이 적합한지 검사할 정규식
+
+          var num1 = $("#unum1");
+          var num2 = $("#unum2");
+
+          var arrNum1 = num1.val().split(''); // 주민번호 앞자리숫자 6개를 담을 배열
+          var arrNum2 = num2.val().split(''); // 주민번호 뒷자리숫자 7개를 담을 배열
+
+          var tempSum = 0;
+
+          for (var i = 0; i < num1.val().length; i++) {
+              tempSum += arrNum1[i] * (2 + i);
+          } // 주민번호 검사방법을 적용하여 앞 번호를 모두 계산하여 더함
+
+          for (var i = 0; i < num2.val().length - 1; i++) {
+              if (i >= 2) {
+                  tempSum += arrNum2[i] * i;
+              } else {
+                  tempSum += arrNum2[i] * (8 + i);
+              }
+          } // 같은방식으로 앞 번호 계산한것의 합에 뒷번호 계산한것을 모두 더함
+
+          if ((11 - (tempSum % 11)) % 10 !== parseInt(arrNum2[6])) {
+              alert("올바른 주민번호가 아닙니다.");
+              num1.val("");
+              num2.val("");
+              num1.focus();
+              return false;
+          } else {
+              alert("올바른 주민등록번호 입니다.");
+          }
+          return true;
+      }
+	
+	
+	
+	
+	/* $("#ssn2").keyup(function() {
+	    // 입력된 주민번호 가져오기
+	    const ssn2 = $(this).val();
+
+	    // ssn3에는 가려지지 않은 숫자 전달
+	    $("#ssn3").val($("#ssn3").val().slice(0, -1) + ssn2.charAt(ssn2.length - 1));
+
+	    // ssn3의 value 값을 콘솔에 출력
+	    console.log("ssn3: " + $("#ssn3").val());
+
+	    // ssn2의 값이 1보다 크면 첫 번째 숫자를 제외한 나머지를 '*'로 변경하여 ssn2에 적용
+	    if (ssn2.length > 1) {
+	        const firstDigit = ssn2.charAt(0);
+	        const maskedSSN2 = '*'.repeat(ssn2.length - 1);
+	        $(this).val(firstDigit + maskedSSN2);
+	    }
+	}); */
+
+
+
+	/* // 주민번호 입력란에 입력이 발생할 때마다 처리
+	$("#ssn2").on("input", function() {
+	    // 입력된 주민번호 가져오기
+	    const ssn2 = $(this).val();
+
+	    // 뒷자리 숫자 중 첫 번째는 그대로 유지
+	    const firstDigit = ssn2.charAt(0);
+
+	    // ssn3에는 가려지지 않은 숫자 전달
+	    $("#ssn3").val(ssn2);
+
+	    // ssn3의 value 값을 콘솔에 출력
+	    console.log("ssn3: " + $("#ssn3").val());
+
+	    // 두 번째 숫자부터 마지막 숫자까지 *로 변경
+	    const maskedSSN2 = ssn2.substring(1).replace(/\d/g, '*');
+
+	    // ssn2에 바로 적용
+	    $(this).val(firstDigit + maskedSSN2);
+	}); */
+
+
+
+
+
+
+
+	
+	
+	
+    $("#name").on("input", function() {
+        var inputValue = $(this).val();
+        var namePattern = /^[A-Za-z가-힣]{0,5}$/; // 한글, 영어로 5글자까지 입력 가능
+        if (!namePattern.test(inputValue)) {
+            this.setCustomValidity("이름은 한글 또는 영어로 5글자까지 입력 가능합니다.");
+        } else {
+            this.setCustomValidity("");
+        }
+    });
+});
+
+
+$(document).ready(function() {
+    var phone2 = $("#phone2");
+    var phone3 = $("#phone3");
+    
+    phone2.add(phone3).on("input", function() {
+        var inputValue = $(this).val();
+        var numericValue = inputValue.replace(/\D/g, ''); // 숫자 이외의 문자를 제거
+
+        if (numericValue.length === 4) {
+            $(this).val(numericValue); // 숫자만 입력한 값으로 변경
+            if ($(this).is(phone2)) {
+                phone3.focus();
+            }
+        } else {
+            $(this).val(numericValue); // 숫자만 입력한 값으로 변경
+        }
+    });
+});
+
+
+$(document).ready(function() {
+    var phone2 = $("#ssn");
+    var phone3 = $("#ssn2");
+    
+    
+    phone2.add(ssn,ssn2).on("input", function() {
+        var inputValue = $(ssn).val(); // phone2를 통해 현재 이벤트가 발생한 DOM 요소를 참조
+        var numericValue = inputValue.replace(/\D/g, ''); // 숫자 이외의 문자를 제거
+
+    });
+});
+</script>
+
+</body>
+</html>
